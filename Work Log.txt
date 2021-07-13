@@ -1,0 +1,236 @@
+﻿TO DO:
+    • fix setup script
+    • create a pretty printer for trees
+    • fix test generator to ignore prefix of return type
+    • Maybe: Create script to automatically generate forward declarations with input of hdr and src file!
+    • In sll, slls, queue, and stack, implement the more thorough check integrity implemented in dll.
+    • give setup script a .rc file.
+    • add helper function hdr file for sll
+    • modify slls to avoid problem of not hooking up head properly as faced in dll and sll.
+    • test.h needs a repository.
+    • running commands within vi
+
+7/12/2021
+(C++-bst) We started changing the bst code from c, into c++. Got some linker errors in bst, so need to sort that out next time. We started changing bst_node’s code to c++. Need to continue doing that next time.
+A reminder: Do two-factor authentication for GitHub!!
+
+7/8/2021
+(C-bst) We finished refactoring all of binary_search_tree and are finished with it. Next time we will be moving on to C++. (Note: we will implement display_bfs() when we go on to C++).
+
+7/7/2021
+(C-bst) We finished refactoring check_integrity_functions.c. We now have to implement display_bfs() and refactor other files.
+
+7/5/2021
+(C-bst) We sorted out the git problem, and fixed the makefile by adding a dependency on the new .c files we include in binary_search_tree.c. We also pulled out all the check_integrity code from the main file into its own file. We started refactoring the check_integrity functions, and have to do more next time.
+
+7/1/2021
+(C-bst) We finished testing all the functions that we wanted to and now we have to refactor. We decided that preorder, postorder, and inorder were not functions of searching, but displaying, so we changed our code accordingly. We also decided to pull out the display functions and check integrity functions into their own .c files. We discovered the makefile was not working properly with these new files. We need to fix that next time, as well as populate check_integrity_functions.c, implement display_bfs(), and continue refactoring. Need to look at commit history and back off some because of errors caused!
+
+6/30/2021
+(C-bst) We decided that our tests for clear() were finished, but noticed that insert() still needed a lot of testing. We added a check in check_integrity() for checking that parent pointer’s integrity. This required us to introduce another helper function to break the integrity. We finished testing that. Now we have to continue testing the other functions.
+
+6/28/2021
+(C-bst) We started adding test cases for clear, which revealed the need for return codes within the clear implementation, so we could distinguish between the various cases. After testing, we discovered that we were violating check_integrity(), so we added many errors to pinpoint where we were failing within check_integrity(). This revealed that we were not NULL(ing) pointers prior to deleting nodes. One example is that after clearing, the tree was empty, but the root was not NULL. We are not convinced that we are finished with testing clear, so will look into that next time.
+
+6/24/2021
+(C-bst) Last time, we discovered that the insertion was not working properly. The size and nodes in the tree were not in sync because after we inserted the left subtree (if we had it), we would automatically return, regardless of whether or not we had the right subtree. We fixed this problem today. We also got rid of the warnings where we didn’t need them, in the process turning bst_search_inorder() and the other searches into a Bst_Return_Code. Bst_Return_Code is a type-def we implemented to no longer have to put unsigned int s everywhere. Instead of making remove_root() a void, we decided to make it a Bst_Return_Code and did. The last thing we did today was implement delete, clear, and tear-down(), but we have not tested delete or clear yet, so we will do that next time.
+
+6/23/2021
+(C-bst) We introduced return codes to remove the noise (warnings) from the tests. This revealed more deficiencies in our tests (good thing we introduced return codes). Next time we have to resolve some of the problems, get rid of the warning where we don’t need them, and MAKE REMOVE_ROOT() VOID!
+
+6/22/2021
+(C-bst) We made a simple change we thought was correct without properly testing it, which lead to errors in an area we weren’t focused on. This lead us down a rabbit hole. The lesson here is “test every change you make, no matter how trivial”. We also added checks in private functions for null, which we didn’t have before because we thought we controlled their invocations, but later we used it from a different place forgetting that this check was required before calling it. In another case, we simply did not check which lead to WARNINGS. Next time, we want to both review that we are covering and testing all edge cases for remove, and go through our functions for any mistakes like this we could’ve missed.
+
+6/17/2021
+(C-bst) We refactored remove() and started refactoring remove_root(), in the process creating many functions to help us do that. We still have to finish up remove_root() next time. Our reason of refactoring these functions was so that it was readable and clear to us, as they were getting pretty large and complex.
+
+6/15/2021
+(C-bst) We expanded our tests for remove() and exposed many cases we did not consider beyond the general case. This lead to the introduction of several special cases. Next time we have to test these cases we added and make any changes necessary.
+
+6/3/2021
+(C-bst) We finished implementing find_removal_point() and reinsert_subtree(), but then when testing we noticed warnings that shouldn’t have been their from reinsert_subtree(). Once we investigated the warnings we discovered that when we inserted the first node of the sub-tree it inserted the rest of the nodes too, because it was already hooked up. This meant that we only had to insert the root of each subtree rather than traverse the entire subtree. We should no longer need reinsert_subtree()!
+
+6/2/2021
+(C-bst) We completed insertion of one node, but still need tests. Started implementing remove() and will have to continue with that next time. We will also need to think more about find_removal_point()’s implementation.
+
+5/27/2021
+(C-bst) We started implementing remove_node(), but then we needed a way to insert a sub-tree, so we decided to change insert() to allow inserting a sub-tree. In the process, we created insert_num() which would only insert a single node. When we tested it, we got a lot of warnings about bst_node_num(), which we have to figure out next time. 
+We also started implementing check_integrity(). We added checks to verify that the order was maintained throughout the tree.
+
+5/22/2021
+(C-bst) A while ago, we started reading a book on balanced trees, 2-3-4 trees, and red-black trees. After exploring that, we decided we would no longer pursue rbt, because it was taking us down a path that I am not ready for. Instead we decided to go onto binary search trees, here on referred to as bst. We started implementing bst and now have both create() and insert() working. We also have bst_node fully functional. While using test_generator we saw that for some functions with a return type that included the prefix, it thought that the return type was the interface name and used that in the tests. We have to find out how to fix that.
+
+4/29/2021
+(C-rbt) Added a test based on the video examples, so that we have an example to verify against. From this examples, we recognized that our existing implementation doesn’t handle multiple cases properly. We have decided to write our own algorithms based on our understanding and then code them, so that we don’t get confused by the pseudo code we used.
+
+4/28/2021
+(C-rbt) Using the video (https://www.youtube.com/watch?v=95s3ndZRGbk) and bits and pieces of our previous left_rotate() pseudo code, we created our own left_rotate() code, which we determined to work. Then, we created our right_rotate() code and tested it (case_2) to see if that works. We seemed to never go into right_rotate() or case_2() though. We have to figure that out, and we also have to figure out how to modify n in our rotate methods, so that we go into the while loop again to fix any more problems we encounter.
+
+4/26/2021
+(C-rbt) We finished testing insert() for case 1 and it successfully worked! We still did not figure out why we had an infinite loop that magically disappeared, but we were able to fix case_1(). We started working on rotating and found pseudo code for the rotations here: https://www.youtube.com/watch?v=95s3ndZRGbk. We coded left_rotate() and have right_rotate() yet to do, but we also have to find out if left_rotate() works. Make was a success but when we tested it we got a Segmentation Fault. We still have to figure that out next time.
+
+4/22/2021
+(C-rbt) We started to test insert() and it worked for the trivial cases and case 0, but when we tested case 1 (four nodes), it failed because we encountered an infinite loop in fix-up(), we suspected we were not updating the loop control variable n, so we displayed n before and after updating it to verify it was being changed. It was, but during all that we made a number of other changes and the infinite loop went away magically, so we still don’t know what the cause was. This is something we still have to explore. 
+
+4/21/2021
+(C-rbt) We now think we fully understand the fix-up pseudo code, and we have implemented all the pseudo code, which now compiles. Next time, we will test to make sure the new code we just implemented, properly works.
+
+4/19/2021
+(C-rbt) We used refactoring to help us better understand rbt_insert_fix-up(). We don’t think we fully understand fix-up yet, so will continue next time.
+
+4/14/2021
+(C-rbt) From the video (https://www.youtube.com/watch?v=A3JZinzkMpk) we copied the pseudo code for insertion and fix-up and did some refactoring to make sure we understood it. Now we have to refactor fix-up to make sure we understand that well too. 
+
+4/12/2021
+(C-rbt) We started by taking stock of the algorithms we considered. In doing this, we realized that we needed a deeper understanding of a red-black tree to avoid work that we may need to undo. We started exploring red-black trees online, and decided too simply implement the approach we learned about. 
+
+4/7/2021
+(C-rbt) We decided not to adopt the relational algebra approach because that would be taking us too far a field. Instead we started to explore algorithms for how we might implement remove_node(…). We considered a few and considered the number of operations each would require in a big O analysis. This analysis led us to seriously consider introducing a count variable for each node that indicates how many nodes are in that sub-tree. This number can be used to make smarter decisions with respect to how we reconnect severed sub-trees after we find the node we want to remove. This led to a couple of ideas of how to decrement the count for the nodes above the one removed. We considered decrementing as we searched for the node to remove and creating an undo list if the node was not found. The other option was to remove the node and reconnect the tree, then do an second traversal to the newly connected node, decrementing the count along the way. This also applies for adding nodes.
+
+4/5/2021
+    • (C-rbt) before calling an existing interface that takes a tree, the tree needs to be intact. (integrity is upheld)
+    • Robin had an idea; a wonderfully awful idea. ☺ He wants to adopt the relational algebra (or lisp) approach to working with trees, where there are no destructive operations other than delete. This will not attempt to address issues of efficiency.  All functions will take trees and return trees that are new entities, distinct from the arguments passed to the functions. We have defined some of the interfaces and will expand on this next time. 
+
+3/31/2021
+(C-rbt) We ran into some trouble with dealing with the pointers. We were able to fix it, but did not make the real pointer NULL, only a copy, so we have to figure out how to modify the real pointer, not just a copy of it. We created a rbt-parent-child structure, but got rid of it in the end, and now think that we may have to reintroduce it, so that we can we can pass around the real parent and child pointers.
+Note: One reason that this problem came up is that we are using recursion. If we had used simple iteration, keeping track of the real pointers would not have been so difficult.
+
+3/29/2021
+(C-rbt) We decided to push off doing the sum of products, because our code was working as it was, and doing the sum of products wasn’t adding any value. Instead, we focused on getting the other functions working. We coded remove_node(), and thought it was working, so tested it. To support testing it, we created a display() for both rbt and rbt_node. But then, when we ran the tests, we discovered that our code wasn’t stitching up the parent properly.
+
+3/25/2021
+(C-rbt) We made the mistake of thinking that 1 was the same for all results, except, there were 3 different results (excluding the else case (return false)). The 3 were: go left; go right; return n. We fixed this and then had 1’s of three separate categories. We then decided to do separate sums of products for all 3 different results. We did the sum of products for 1n (returning n), because that was the one with the most. But we made another mistake here. We found out that b = `d and d = `b, so we changed it to have only b, using b and `b where d and `d were. Problem fixed...Or so we thought! We realized later (here is where the other problem comes into play) that getting rid of d was not a good idea because b = `d or e. There are many other combinations that prove getting rid of d as wrong, but I will only list this one here, to show that it was better of before we got rid of d. On top of that, if we didn’t have enough problems our code (that came from the result of the sum of products for 1n) is flawed. Maybe fixing the other problems will help, but we may have to start over, or sort this out the next time we do Computer Science.
+
+3/24/2021
+(C-rbt) We got inorder working in a quick, easy, and crude method. We also tested it and it worked! Today was my first time seeing/using a “truth table” and using “sum of products” to simplify the result of the truth table. We now have the result of the truth table simplified and put it in terms of our code, but we haven’t actually coded it yet. We will revisit the “truth table” and “sum of products” next time and will also try to code it!
+Here is our simplified result:
+`a(`ce + bc)
+
+3/17/2021
+(C-rbt) We replaced debug_display_left() and debug_display_right() with a single functions where going left and right is accomplished be passing in the appropriate pointer. 
+
+3/15/2021
+(C-rbt) We created a debug_display() for testing insert node. We found that in insert_node() we checked whether the root was null, and if it was, made the root the new node. Then we wanted to have an else case, but instead we did another if, so both were executed, and a node was duplicated. We fixed that problem, but now are onto another problem involving duplication. Our tree is correct though, aside from the duplicate. When we tried it with 2 more nodes than our current tree (right now), we faced some issues of not finding out the value of one node, and having one node not stitched up to the tree. We will sort these problems out next time.
+
+3/11/2021
+(C-rbt) We tried creating an insert method, and tried testing it out. Still not sure if it is working properly and need to get it sorted out. 
+
+3/10/2021
+(C-rbt) We started implementing red-black tree (rbt). Implemented create and started implementing clear, but needed a search for it to work, so that caused us to implement inorder search. Implemented inorder and made go_left() and go_right(), which can be further used in the other searches. We are unsure whether we want to even have a current, so we have that commented out for now, in case we want to use it later. We have to address doing two-factor authentication for GitHub, but we have till August, so that won’t be our top priority.
+
+3/8/2021
+(C-rbt_node) We finished testing rbt_node and are now done with rbt_node!! We moved enum color_type definition into the hdr file so that the tests could access it, too. We also changed the hdr file so that rbt_node_right() would take a struct rbt_node *. In our rbt_node.c file we were never including the hdr file, so we changed that. Also, we added CHECK_NULL to the following functions: rbt_node_left(); rbt_node_right(); and rbt_node_color(). In our tests, we give all the functions a NULL pointer to test the function. Our functions print errors to stderr if this happens. We are a little uncomfortable something is being printed to stderr, even if the tests were successful, so we may revisit that and see how we can fix this small issue. We started red_black_tree (here on referred to as rbt), created the hdr file for rbt, and declared all of the public interfaces.
+
+3/4/2021
+(C-rbt_node) We implemented the tests for rbt_node_clear() and rbt_node_delete(). We also introduced CHECK_NULL to check if our node was null. But we still want to find a way to put “ERROR:” in the actual macro, instead of having to write it every time. Another thing we did was change the signature of rbt_node_num and rbt_node_left, from taking struct node n, to struct node * n. 
+
+3/3/2021
+(C-rbt_node) We moved all node files into their own directory: node. Created separate makefile for node and fixed rbt’s makefile to no longer include node files. We also created helper_functions.h. Check_integrity() and debug_display() are our best friend!! Another important thing we did today was to introduce “enum”. We created enum for color and changed implementation to incorporate that. We also changed the prefix from “rbt_” to “rbt_node_” and changed the name of the structure “node” to “rbt_node”. I think the second most important thing we did today, aside from enum, was start to implement the tests. 
+
+3/1/2021
+(C-rbt/rbt_node)Today we looked at some of the different types of trees and decided we would do a red-black tree. We started implementing the red-black tree, here on referred to as the rbt. To start, we implemented the hdr and src file for the node module, which we decided to introduce in tree. Then we generated the test, but have not done them yet (still a bunch of TODO’s)!! We also have to change the makefile for rbt to include test_node.c, a separate test file we made for node. We also need to address doing two-factor authentication for GitHub.
+A reminder: Change makefile for rbt!!
+
+2/22/2021
+(C-dll) We moved all the check integrity functions into their own implementation file and included that in doubly_linked_list.c. We also did the same for all the display functions including debug_display(), display(), and display_node(). Another thing we did was finish refactoring, so we are officially done with dll !! Will move on to tree the next time we do Computer Science. 
+
+2/22/2021
+(C-dll) We implemented dll_check_pointer_integrity() for checking if the pointers were correct. Also added a couple of other functions to walk forward and backwards through list. As a result of these functions, discovered that remove was not hooking up prev properly and fixed.
+
+2/10/2021
+(C-dll) Continued adding tests and implementations. Ran into some problems where prev was not being hooked up properly. Still need to fix that the next time we do this, and also need to continue implementing the function dll_check_pointer_integrity().
+
+2/8/2021
+(C-dll) Continued adding tests and implementations. Fixed problem with not hooking up head properly. This lead to modifying sll as well. We had to check in append() to see if their was only one thing in the list as well. We may need to modify slls to avoid this problem, also.
+
+2/7/2021
+(C-dll) Continued adding tests and implementations. Ran into a problem with appending, but unable to sort it out in the time we had. Will address it next time.
+
+2/4/2021
+(C-dll) Finished refactoring test_generator and started working on doubly linked list (here on referred to as dll). We finished hdr file and started working on implementation and test. We decided to first do the tests and implementation of the easier interfaces first. Found out that sll needed a helper function hdr file.
+
+2/3/2021
+(C-test_generator) Continued refactoring, but next time need to replace string literals. Added a separate hdr file for queue and stack, to include the helper functions. Changed rc file in test_generator to stack to test recent change.
+
+2/1/2021
+(C-test_generator) We started refactoring test_generator, but are not finished yet. 
+
+1/27/2021
+(C-test_generator) We figured out how to fix the sscanf problem. 
+This was our solution: sscanf(line, "%[^:]:%s", tag, g_rest_of_line);
+This can be read as: look for anything that is not a colon (%[^:]), followed be a ‘:’ followed by a string. Put the thing before ‘:’ in tag and put thing after ‘:’ in rest_of_line. 
+We decided to write the output of test_generator to stdout and let the user decide where to redirect it to. Next time we have to refactor. 
+We also successfully created a remote repository for test_generator and pushed our code up!
+
+1/25/2021
+(C-test_generator) We created a .rc file that includes any outside values the test_generator needs. We had to change the generate_test.c file (previously test.c) to use the .rc file. We still need to work on that. We also changed the makefile to produce the generate_test executable, as opposed to test (which doesn’t make sense when developing a tool).
+
+1/24/2021
+(C-test_generator) We added the code to generate asserts and added a usage statement in main to guard against errant invocations. Discovered that we were only implementing this for slls, so we have to find out how to generalize it. 
+
+1/21/2021
+(C-test_generator) To solve the problem we previously faced, we passed in the thing to be populated rather than return a pointer to a string (to be used to populate the thing) because the pointer we were returning was pointing to a local variable, which goes away after the function returns. We also finished prepopulating our table with all the interfaces and changed the get_stubs code to adapt to this new change and use the populated table instead of going and getting the interface name every time. We still  have to figure out how to add the asserts. I think that the job of that will now be pretty simple as we already have all the interfaces.
+
+1/14/2021
+(C-test_generator) We started implementing the pre-populate option we decided we would do. Ran into some issues returning the result from the extract function. I suspect the memory the char * is pointing to is no longer valid, so we need to explore that further.
+
+1/13/2021
+(C-test_generator) We updated forward declarations, implemented the extract_interface_name function, and added an assert marker. I also learned about state and more about trade-off between modularity and optimization, and the difference between coupling and cohesion. We entertained and explored pre-population and on-demand population of a table containing interface names for our get_stubs code, but decided to delay it until refactoring. When we started trying to implement code for adding the asserts (which is still a TODO) we found that the table would come in handy. So we will implement that next. 
+
+1/11/2021
+(C-test_generator) We are now able to identify public interfaces within a .h file. We also modified slls’ hdr file to include a different hdr file for helper functions or functions we don’t test. We still have to do that for sll, queue, and stack. And we also changed our code so that you have to pass in the prefix (ex. slls_) so that we can use it to identify interface names in hdr file. We also found an error in our code. We were linking not finding a stub to termination. This shouldn’t have been the case, so we fixed it to link EOF to termination. So, now the code is successfully working, but we still have to find the interface name and update our forward declarations.
+
+1/6/2021
+(C-test_generator) We implemented the pseudo code we had previously written. We updated our forward declarations to include every private function we had. We also tried creating a git repository for test_generator, and failed. Next time we still have to sort that out. We also have to sort out how we are supposed to find out  how to find the public interface name. 
+
+1/4/2021
+(C-test_generator) Robin taught me about recursion. I think it is a very interesting concept. We did pseudo code about what we want to achieve regarding appending stub name. When we next do Computer Science we still have to figure out how to properly implement the pseudo code we wrote. 
+
+12/29/2020 
+(C-test_generator) We fleshed out most of the test generator code. We wrote the beginning part of the test template to memory, wrote fake stubs (for now) to memory, and wrote the end part of the test template to memory. After that we wrote it all to our output file. We only have 2 TODO’s left. 1 for adding asserts and 2 for adding/creating real stubs. In our existing code we append a random function name and are not reading from the hdr file. We still have to figure out how to do that and after that refactor and add asserts. 
+
+12/29/2020 
+(C-sll) We figured out why the malloc was failing. It was because we were using sizeof, giving it a pointer to a string, and sizeof returned the size of the pointer. What we should have done was use strlen()+1. This fixed the problem. We updated the tests for sll_of_strings to fail on the malloc error, making them more robust. 
+
+12/23/2020 
+(C-test_generator) Figured out why linker was failing. The problem had to do with the placement of where we put the library and library path in the gcc command. It turned out that we had to move the library and library path to the end of the gcc command. We ran into another problem; malloc(): corrupted top size. Still have to figure out how to solve it.
+
+12/22/2020 
+(C-test_generator) started using sll_of_strings in our test_generator code. Could not link properly as the linker was failing. It could not find the functions we called. So we still have to figure out why.
+
+12/21/2020 
+(C-sll) Completed sll_of_strings. Next step is to start using it in our test generator code.
+
+12/20/2020 
+(C-test_generator/sll) Decided to create our dest file (test.c) by building up lists of strings in memory before writing to dest file. This required that we modify sll to work with strings. Created sll_of_strings for this purpose, which required significant modification to sll. Created make_node_str.
+
+12/16/2020 
+(C-test_generator) Copied all contents of template file to test.c.
+
+12/15/2020 
+(C-test_generator) We learned how to open a file for reading and read a single line from the file and display it.
+
+12/10/2020 
+(C-test_generator) Started creating test generator. Work in Progress!!
+
+12/9/2020 
+(C-sll/queue/stack) We modified tests in queue to reflect lessons learned from singly linked list. Found some problems in both stack and singly linked list along the way and fixed. Moved all common test code to test.h.
+
+12/8/2020 
+(C-sll/stack) Learned how to auto complete in vi. We modified tests in stack to reflect lessons learned from singly linked list.
+
+12/7/2020 
+(C-sll/stack) Started applying lessons learned from singly linked list to stack. Discovered that the compiler doesn’t complain when you supply arguments to a function that takes none. I don’t understand why! Discovered a few issues in singly linked list along the way and updated it accordingly. 
+
+12/4/2020 
+(C-bash) Created script to set up windows for me.
+
+12/3/2020 
+(C-vi/sll) Learned how to bookmark in vi. Finished refactoring.
+
+12/2/2020 
+(C-sll) We refactored to make functions as small as possible, introducing several new private functions. Still remaining is remove and all other functions below it. 
+
+11/30/2020 
+(C-sll) Completed testing all public interfaces. Found no need to distinguish between red and green light tests as we were testing all possible paths in each interface.
+
