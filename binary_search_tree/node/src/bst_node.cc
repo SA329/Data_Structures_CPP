@@ -1,8 +1,6 @@
 #include "../include/bst_node.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
+using namespace std;
 
 #define CHECK_NULL(n, error_string, ret_value) \
     if (n == NULL) \
@@ -11,52 +9,43 @@
         return ret_value; \
     }
 
-// Private Functions:
-/*
-void bst_node_initialize (struct bst_node * n)
+bst_node::bst_node () :
+_num(0), // 0 indicated not yet used
+_left(NULL), 
+_right(NULL), 
+_parent(NULL)
 {
-    n->num = 0; // 0 indicated not yet used
-    n->left = NULL;
-    n->right = NULL;
-    n->parent = NULL;
+    cout << "entered ctor() for " << this << endl;
 }
-*/
 
-// Public Interfaces:
-bst_node::bst_node ()
+bst_node::bst_node (int i) :
+_num(i),
+_left(NULL), 
+_right(NULL), 
+_parent(NULL)
 {
-    initialize();
+    cout << "entered ctor(int) for " << this << endl;
 }
 
 bst_node::~bst_node ()
 {
-    // TODO: do we want to delete child/parent nodes?
-    //       We suspect we do not, because I don't think this object creates children/parent.
-    if (_left != NULL)
-    {
-        delete _left;
-        _left = NULL;
-    }
-
-    if (_right != NULL)
-    {
-        delete _right;
-        _right = NULL;
-    }
-
-    if (_parent != NULL)
-    {
-        delete _parent;
-        _parent = NULL;
-    }
+    cout << "entered dtor() for " << this << endl;
 }
 
 void bst_node::initialize ()
 {
-    _num = 0; // 0 indicated not yet used
+    _num = 0;
     _left = NULL;
     _right = NULL;
     _parent = NULL;
+}
+
+void bst_node::display ()
+{
+    cout << "_num is " << _num 
+         << ", _left is " << _left
+         << ", _right is " << _right
+         << ", _parent is " << _parent << endl;
 }
 
 /*

@@ -4,8 +4,11 @@ class bst_node
 {
     public:
     bst_node ();
-    ~bst_node ();
+    bst_node (int);
+    virtual ~bst_node ();
 
+    void set_left (class bst_node *);
+    void display ();
     /*
     void bst_node_clear (class bst_node *);
     int bst_node_num (class bst_node *);
