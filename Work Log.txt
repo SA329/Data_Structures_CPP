@@ -11,8 +11,7 @@
     • running commands within vi
 
 7/14/2021
-(C++-bst) I learned about constructors, destructors, new, and delete. And how to call methods within an object. To test this, we created a main() in test, which will create instances of a class and pointers to instances of a class, and will delete them, both using delete and automatically.
-A reminder: Do two-factor authentication for GitHub!!
+(C++-bst) I learned about constructors, destructors, new, and delete. And how to call methods within an object. To test this, we created a main() in test, which will create instances of a class and pointers to instances of a class, and will delete them, both using delete and automatically. Remember to create .gitignore in .git directory including .a, .o, and test. A reminder: Do two-factor authentication for GitHub!!
 
 7/12/2021
 (C++-bst) We started changing the bst code from c, into c++. Got some linker errors in bst, so need to sort that out next time. We started changing bst_node’s code to c++. Need to continue doing that next time.
