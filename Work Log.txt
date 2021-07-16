@@ -10,8 +10,12 @@
     • test.h needs a repository.
     • running commands within vi
 
+7/15/2021
+(C++-bst) Created a .gitignore and learned about the role of the keyword virtual in dictating what methods will be called when a derived class is involved. We furthered ported the implementation in c to c++. As we were implementing the getters in c++, we realized that we had encapsulated the data by making it private and we broke that encapsulation by letting people see what the data was. We tried doing a workaround, but were unsuccessful. After discussing about this, we decided to let the getters go, but the setters were still a problem. Because of this, we are thinking about making the class a struct because that would make everything public, as introducing the setters and getters would have done as well. Another thing we were thinking about was overloading the constructor to do this stuff, which would create a new node with new values every time we wanted to change something, and then we would have to delete the previous node. But as this would complicate things a little, we decided not to pursue the idea. Next time, we will have to decide on what we should do regarding the setters and getters.
+A reminder: Do two-factor authentication for GitHub!!
+
 7/14/2021
-(C++-bst) I learned about constructors, destructors, new, and delete. And how to call methods within an object. To test this, we created a main() in test, which will create instances of a class and pointers to instances of a class, and will delete them, both using delete and automatically. Remember to create .gitignore in .git directory including .a, .o, and test. A reminder: Do two-factor authentication for GitHub!!
+(C++-bst) I learned about constructors, destructors, new, and delete. And how to call methods within an object. To test this, we created a main() in test, which will create instances of a class and pointers to instances of a class, and will delete them, both using delete and automatically. Remember to create .gitignore in .git directory including .a, .o, and test. 
 
 7/12/2021
 (C++-bst) We started changing the bst code from c, into c++. Got some linker errors in bst, so need to sort that out next time. We started changing bst_node’s code to c++. Need to continue doing that next time.
