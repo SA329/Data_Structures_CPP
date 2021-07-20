@@ -2,4 +2,4 @@
 *.swp
 *.a
 *.bak
-tst/test
+**/tst/test
