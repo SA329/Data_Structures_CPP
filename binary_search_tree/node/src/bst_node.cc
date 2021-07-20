@@ -2,20 +2,12 @@
 #include <iostream>
 using namespace std;
 
-#define CHECK_NULL(n, error_string, ret_value) \
-    if (n == NULL) \
-    { \
-        fprintf(stderr, error_string); \
-        return ret_value; \
-    }
-
 bst_node::bst_node () :
 _num(0), // 0 indicated not yet used
 _left(NULL), 
 _right(NULL), 
 _parent(NULL)
 {
-    cout << "entered bst_node::ctor() for " << this << endl;
 }
 
 bst_node::bst_node (int i) :
@@ -24,15 +16,14 @@ _left(NULL),
 _right(NULL), 
 _parent(NULL)
 {
-    cout << "entered bst_node::ctor(int) for " << this << endl;
 }
 
 bst_node::~bst_node ()
 {
-    cout << "entered bst_node::dtor() for " << this << endl;
+    clear();
 }
 
-void bst_node::initialize ()
+void bst_node::clear ()
 {
     _num = 0;
     _left = NULL;
@@ -42,10 +33,12 @@ void bst_node::initialize ()
 
 void bst_node::display ()
 {
-    cout << "_num is " << _num 
-         << ", _left is " << _left
-         << ", _right is " << _right
-         << ", _parent is " << _parent << endl;
+    cout << "this = " << this
+         << ", _num = " << _num 
+         << ", _left = " << _left
+         << ", _right = " << _right
+         << ", _parent = " << _parent
+         << "." << endl;
 }
 
 int bst_node::num ()
@@ -68,99 +61,17 @@ bst_node * bst_node::parent ()
     return _parent;
 }
 
-Saumya::Saumya () :
-level_of_bunnosity(500000),
-level_of_lumposity(500009)
+void bst_node::add_left (class bst_node * n)
 {
-    cout << "entered Saumya::ctor() for " << this << endl;
+    _left = n;
 }
 
-Saumya::~Saumya ()
+void bst_node::add_right (class bst_node * n)
 {
-    cout << "entered Saumya::dtor() for " << this << endl;
+    _right = n;
 }
 
-void Saumya::display ()
+void bst_node::add_parent (class bst_node * n)
 {
-    cout << "level_of_bunnosity is " << level_of_bunnosity
-         << ", level_of_lumposity is " << level_of_lumposity
-         << ", ";
-
-    bst_node::display();
+    _parent = n;
 }
-
-/*
-void bst_node_clear (struct bst_node * n)
-{
-    CHECK_NULL(
-        n, 
-        "WARNING: bst_node_clear(struct bst_node * n): n is NULL!\n",
-        ;);
-
-    bst_node_initialize(n); 
-}
-
-// Accessors:
-void bst_node_set_num (struct bst_node * n, int num)
-{
-    CHECK_NULL(
-        n,
-        "ERROR: bst_node_set_num(struct bst_node * n, ...): n is NULL!\n",
-        ;);
-
-    n->num = num;
-}
-
-void bst_node_set_left (struct bst_node * n, struct bst_node * left)
-{
-    CHECK_NULL(
-        n, 
-        "ERROR: bst_node_set_left(struct bst_node * n, ...): n is NULL!\n",
-        ;);
-
-    n->left = left;
-}
-
-void bst_node_set_right (struct bst_node * n, struct bst_node * right)
-{
-    CHECK_NULL(
-        n,
-        "ERROR: bst_node_set_right(struct bst_node * n, ...): n is NULL!\n",
-        ;);
-
-    n->right = right;
-}
-
-void bst_node_set_parent (struct bst_node * n, struct bst_node * p)
-{
-    CHECK_NULL(
-        n,
-        "ERROR: bst_node_set_parent(struct bst_node * n, ...): n is NULL!\n",
-        ;);
-
-    n->parent = p;
-}
-
-// Helper Functions:
-void bst_node_debug_display (struct bst_node * n)
-{
-   CHECK_NULL(
-        n,
-        "ERROR: bst_node_debug_display(struct bst_node * n): n is NULL!\n",
-        ;);
-
-   printf("n = %p\n", n);
-   printf("n->num = %d\n", n->num); 
-   printf("n->left = %p\n", n->left); 
-   printf("n->right = %p\n", n->right); 
-   printf("n->parent = %p\n", n->parent); 
-}
-
-bool bst_node_check_integrity (struct bst_node * n)
-{
-    if (n == NULL)
-        return false;
-
-    return true;
-}
-*/
