@@ -13,7 +13,7 @@
     • add const-ness to c++ code
 
 7/19/2021
-(C++-bst) We decided to keep bst_node a class for now. We also finished porting the implementation of bst_node and tests to c++. Next time we have to port the c implementation of bst to c++.
+(C++-bst) We decided to keep bst_node a class for now. We also finished porting the implementation of bst_node and tests to c++. Next time we have to port the c implementation of bst to c++. Figure out how to ignore test files.
 A reminder: Do two-factor authentication for GitHub!!
 
 7/15/2021
