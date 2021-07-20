@@ -1,5 +1,6 @@
 ﻿TO DO:
-    • fix setup script
+    • delete oem account
+    • create setup script and create github repository for scripts
     • create a pretty printer for trees
     • fix test generator to ignore prefix of return type
     • Maybe: Create script to automatically generate forward declarations with input of hdr and src file!
@@ -9,10 +10,14 @@
     • modify slls to avoid problem of not hooking up head properly as faced in dll and sll.
     • test.h needs a repository.
     • running commands within vi
+    • add const-ness to c++ code
+
+7/19/2021
+(C++-bst) We decided to keep bst_node a class for now. We also finished porting the implementation of bst_node and tests to c++. Next time we have to port the c implementation of bst to c++.
+A reminder: Do two-factor authentication for GitHub!!
 
 7/15/2021
 (C++-bst) Created a .gitignore and learned about the role of the keyword virtual in dictating what methods will be called when a derived class is involved. We furthered ported the implementation in c to c++. As we were implementing the getters in c++, we realized that we had encapsulated the data by making it private and we broke that encapsulation by letting people see what the data was. We tried doing a workaround, but were unsuccessful. After discussing about this, we decided to let the getters go, but the setters were still a problem. Because of this, we are thinking about making the class a struct because that would make everything public, as introducing the setters and getters would have done as well. Another thing we were thinking about was overloading the constructor to do this stuff, which would create a new node with new values every time we wanted to change something, and then we would have to delete the previous node. But as this would complicate things a little, we decided not to pursue the idea. Next time, we will have to decide on what we should do regarding the setters and getters.
-A reminder: Do two-factor authentication for GitHub!!
 
 7/14/2021
 (C++-bst) I learned about constructors, destructors, new, and delete. And how to call methods within an object. To test this, we created a main() in test, which will create instances of a class and pointers to instances of a class, and will delete them, both using delete and automatically. Remember to create .gitignore in .git directory including .a, .o, and test. 
@@ -140,7 +145,7 @@ A reminder: Change makefile for rbt!!
 2/22/2021
 (C-dll) We moved all the check integrity functions into their own implementation file and included that in doubly_linked_list.c. We also did the same for all the display functions including debug_display(), display(), and display_node(). Another thing we did was finish refactoring, so we are officially done with dll !! Will move on to tree the next time we do Computer Science. 
 
-2/22/2021
+2/20/2021
 (C-dll) We implemented dll_check_pointer_integrity() for checking if the pointers were correct. Also added a couple of other functions to walk forward and backwards through list. As a result of these functions, discovered that remove was not hooking up prev properly and fixed.
 
 2/10/2021
@@ -195,7 +200,7 @@ We also successfully created a remote repository for test_generator and pushed o
 12/29/2020 
 (C-test_generator) We fleshed out most of the test generator code. We wrote the beginning part of the test template to memory, wrote fake stubs (for now) to memory, and wrote the end part of the test template to memory. After that we wrote it all to our output file. We only have 2 TODO’s left. 1 for adding asserts and 2 for adding/creating real stubs. In our existing code we append a random function name and are not reading from the hdr file. We still have to figure out how to do that and after that refactor and add asserts. 
 
-12/29/2020 
+12/28/2020 
 (C-sll) We figured out why the malloc was failing. It was because we were using sizeof, giving it a pointer to a string, and sizeof returned the size of the pointer. What we should have done was use strlen()+1. This fixed the problem. We updated the tests for sll_of_strings to fail on the malloc error, making them more robust. 
 
 12/23/2020 
@@ -239,4 +244,3 @@ We also successfully created a remote repository for test_generator and pushed o
 
 11/30/2020 
 (C-sll) Completed testing all public interfaces. Found no need to distinguish between red and green light tests as we were testing all possible paths in each interface.
-
