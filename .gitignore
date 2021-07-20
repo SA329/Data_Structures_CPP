@@ -1,4 +1,5 @@
 *.o
 *.swp
 *.a
-test
+*.bak
+tst/test
