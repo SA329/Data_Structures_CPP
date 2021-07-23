@@ -12,20 +12,114 @@
 
 #define BST_INVALID -1
 
-struct bst {
-    struct bst_node * root;
-    int size;
-};
+Bst::Bst () : _root(NULL), _size(0)
+{
+}
 
+Bst::~Bst ()
+{
+}
+
+void Bst::clear ()
+{
+    clearImpl(_root);
+    _root = NULL;
+}
+
+void Bst::clearImpl (BstNode * n)
+{
+   if (n == NULL)
+       return; 
+
+    clearImpl(n->left());
+    clearImpl(n->right());
+
+    delete n;
+    _size--;
+}
+
+bool Bst::isEmpty ()
+{
+    return _size == 0;
+}
+
+unsigned int Bst::size ()
+{
+    return _size;
+}
+
+Bst::ReturnCode Bst::insert (int num)
+{
+    BstNode * n = new BstNode(num);
+
+    ReturnCode result = insertNode(n);
+
+    if (result == BST_SUCCESS)
+        _size++;
+    else
+        delete n;
+
+    return result;
+}
+
+Bst::ReturnCode Bst::insertNode (BstNode * n)
+{
+    if (n == NULL)
+        return BST_NODE_NULL;
+
+    if (isEmpty())
+    {
+        _root = n;
+        return BST_SUCCESS;
+    }
+
+    BstNode * p = getInsertionPoint(n->num());
+    if (p == NULL)
+        return BST_NODE_DUPLICATE;
+
+    setNode(p, n);
+
+    return BST_SUCCESS;
+}
+
+void Bst::setNode (BstNode * p, BstNode * n)
+{
+    n->addParent(p);
+
+    if (n->num() < p->num())
+         p->addLeft(n); // insert left
+    else 
+         p->addRight(n); // insert right
+}
+
+BstNode * Bst::getInsertionPoint (int num)
+{
+   BstNode * p = NULL;
+   BstNode * n = _root;
+   for (; n != NULL; moveToNextNode(num, &n))
+   {
+        if (num == n->num())
+            return NULL; // signals num is already in tree
+
+        p = n;
+   }
+
+   return p;
+}
+
+void Bst::moveToNextNode (int num, BstNode ** n) // *n should never be NULL
+{
+    if (num < (*n)->num())
+        *n = (*n)->left();
+    else 
+        *n = (*n)->right();
+}
+
+/*
 // Forward Declarations:
 struct bst_node * bst_search_impl (struct bst_node *, int);
-struct bst_node * bst_get_insertion_point (struct bst *, int);
-Bst_Return_Code bst_insert_node (struct bst *, struct bst_node *);
-void bst_clear_impl (struct bst *, struct bst_node *);
 Bst_Return_Code bst_remove_node (struct bst *, struct bst_node *);
-void bst_move_to_next_node (int, struct bst_node **);
 struct bst_node * bst_find_node_to_remove (struct bst *, int);
-void bst_set_node (struct bst_node *, struct bst_node *);
 Bst_Return_Code bst_remove_node (struct bst *, struct bst_node *);
 Bst_Return_Code bst_remove_root (struct bst *, struct bst_node *);
 void bst_root_tree_to_right_subtree (struct bst *, struct bst_node *);
@@ -33,63 +127,6 @@ Bst_Return_Code bst_root_tree_to_left_subtree (struct bst *, struct bst_node *);
 Bst_Return_Code bst_remove_general_case (struct bst *, struct bst_node *);
 Bst_Return_Code bst_reinsert_subtrees_of_node (struct bst *, struct bst_node *);
 void bst_disconnect_node_from_parent (struct bst_node *);
-
-struct bst * bst_create ()
-{
-    struct bst * result = (struct bst *) malloc(sizeof(struct bst));
-    return result;
-}
-
-void bst_delete (struct bst ** t)
-{
-    if (t == NULL || *t == NULL)
-        return;
-
-    bst_clear_impl(*t, (*t)->root);
-    free(*t);
-    *t = NULL;
-}
-
-Bst_Return_Code bst_clear (struct bst * t)
-{
-    if (t == NULL)
-        return BST_TREE_NULL;
-
-    bst_clear_impl(t, t->root);
-    t->root = NULL;
-
-    return BST_SUCCESS;
-}
-
-void bst_clear_impl (struct bst * t, struct bst_node * n)
-{
-   if (n == NULL)
-       return; 
-
-    bst_clear_impl(t, bst_node_left(n));
-    bst_clear_impl(t, bst_node_right(n));
-
-    bst_node_delete(&n);
-    t->size--;
-}
-
-int bst_size (struct bst * t)
-{
-    if (t == NULL)
-        return BST_INVALID;
-
-    return t->size;
-}
-
-bool bst_is_empty (struct bst * t)
-{
-    CHECK_NULL(
-        t,
-        "WARNING: bst_is_empty(struct bst * t): t is NULL!\n",
-        false);
-
-    return t->size == 0;
-}
 
 struct bst_node * bst_search_impl (struct bst_node * n, int num)
 {
@@ -115,33 +152,6 @@ Bst_Return_Code bst_search (struct bst * t, int num)
     return BST_NODE_NOT_FOUND;
 }
 
-void bst_move_to_next_node (
-    int num,
-    struct bst_node ** n) // *n should never be NULL
-{
-    if (num < bst_node_num(*n))
-        *n = bst_node_left(*n);
-    else 
-        *n = bst_node_right(*n);
-}
-
-struct bst_node * bst_get_insertion_point (
-    struct bst * t, // t is NOT empty
-    int num)
-{
-   struct bst_node * p = NULL;
-   struct bst_node * n = t->root;
-   for (; n != NULL; bst_move_to_next_node(num, &n))
-   {
-        if (num == bst_node_num(n))
-            return NULL; // signals num is already in tree
-
-        p = n;
-   }
-
-   return p;
-}
-
 struct bst_node * bst_find_node_to_remove (
     struct bst * t, // t is NOT empty
     int num)
@@ -154,54 +164,6 @@ struct bst_node * bst_find_node_to_remove (
    }
 
    return n;
-}
-
-void bst_set_node (struct bst_node * p, struct bst_node * n)
-{
-    bst_node_set_parent(n, p);
-
-    if (bst_node_num(n) < bst_node_num(p))
-         bst_node_set_left(p, n); // insert left
-    else 
-         bst_node_set_right(p, n); // insert right
-}
-
-Bst_Return_Code bst_insert_node (struct bst * t, struct bst_node * n)
-{
-    if (n == NULL)
-        return BST_NODE_NULL;
-
-    if (bst_is_empty(t))
-    {
-        t->root = n;
-        return BST_SUCCESS;
-    }
-
-    struct bst_node * p = bst_get_insertion_point(t, bst_node_num(n));
-    if (p == NULL)
-        return BST_NODE_DUPLICATE;
-
-    bst_set_node(p, n);
-
-    return BST_SUCCESS;
-}
-
-Bst_Return_Code bst_insert (struct bst * t, int num)
-{
-    if (t == NULL)
-        return BST_TREE_NULL;
-
-    struct bst_node * n = bst_node_create();
-    bst_node_set_num(n, num);
-
-    Bst_Return_Code result = bst_insert_node(t, n);
-
-    if (result == BST_SUCCESS)
-        t->size++;
-    else
-        bst_node_delete(&n);
-
-    return result;
 }
 
 bool bst_is_left_child (struct bst_node * n)
@@ -316,3 +278,4 @@ Bst_Return_Code bst_remove (struct bst * t, int num)
 
 #include "bst_display_functions.c"
 #include "bst_check_integrity_functions.c"
+*/

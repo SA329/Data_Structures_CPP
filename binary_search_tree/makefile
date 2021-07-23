@@ -24,7 +24,7 @@ SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 _TEST=test.cc
 TEST = $(patsubst %,$(TDIR)/%,$(_TEST))
 
-$(ODIR)/%.o: $(SDIR)/%.c $(SDIR)/%.cc $(DEPS) $(DEPSC)
+$(ODIR)/%.o: $(SDIR)/%.cc $(DEPS) $(DEPSC)
 	$(CC) -c -o $@ $< $(CFLAGS) 
 
 .PHONY: all
@@ -40,4 +40,4 @@ test: $(TEST) $(OBJ)
 .PHONY: clean 
 
 clean:
-	rm -f $(ODIR)/*.o *~ core 
+	rm -f $(ODIR)/*.o $(OUTPUTFILE) *~ core 
