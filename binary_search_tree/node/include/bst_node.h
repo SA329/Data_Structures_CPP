@@ -17,9 +17,9 @@ class BstNode
     BstNode * parent ();
 
     // setters:
-    void add_left (class BstNode *);
-    void add_right (class BstNode *);
-    void add_parent (class BstNode *);
+    void addLeft (class BstNode *);
+    void addRight (class BstNode *);
+    void addParent (class BstNode *);
 
     private:
     void initialize ();

@@ -61,17 +61,17 @@ BstNode * BstNode::parent ()
     return _parent;
 }
 
-void BstNode::add_left (class BstNode * n)
+void BstNode::addLeft (class BstNode * n)
 {
     _left = n;
 }
 
-void BstNode::add_right (class BstNode * n)
+void BstNode::addRight (class BstNode * n)
 {
     _right = n;
 }
 
-void BstNode::add_parent (class BstNode * n)
+void BstNode::addParent (class BstNode * n)
 {
     _parent = n;
 }

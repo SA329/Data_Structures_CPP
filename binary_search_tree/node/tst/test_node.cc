@@ -35,31 +35,31 @@ int test_clear ()
     return 0;
 }
 
-int test_add_left ()
+int test_addLeft ()
 {
     BstNode n;
     BstNode * dummy = (BstNode *) DUMMY_POINTER_LEFT;
-    n.add_left(dummy);
+    n.addLeft(dummy);
     ASSERT(n.left()==dummy);
 
     return 0;
 }
 
-int test_add_right ()
+int test_addRight ()
 {
     BstNode n;
     BstNode * dummy = (BstNode *) DUMMY_POINTER_RIGHT;
-    n.add_right(dummy);
+    n.addRight(dummy);
     ASSERT(n.right()==dummy);
 
     return 0;
 }
 
-int test_add_parent ()
+int test_addParent ()
 {
     BstNode n;
     BstNode * dummy = (BstNode *) DUMMY_POINTER_PARENT;
-    n.add_parent(dummy);
+    n.addParent(dummy);
     ASSERT(n.parent()==dummy);
 
     return 0;
@@ -69,9 +69,9 @@ int main (int argc, char * argv[])
 {
     ASSERT(test_BstNode()==0);
     ASSERT(test_clear()==0);
-    ASSERT(test_add_left()==0);
-    ASSERT(test_add_right()==0);
-    ASSERT(test_add_parent()==0);
+    ASSERT(test_addLeft()==0);
+    ASSERT(test_addRight()==0);
+    ASSERT(test_addParent()==0);
 
     return 0;
 }
