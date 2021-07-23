@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-bst_node::bst_node () :
+BstNode::BstNode () :
 _num(0), // 0 indicated not yet used
 _left(NULL), 
 _right(NULL), 
@@ -10,7 +10,7 @@ _parent(NULL)
 {
 }
 
-bst_node::bst_node (int i) :
+BstNode::BstNode (int i) :
 _num(i),
 _left(NULL), 
 _right(NULL), 
@@ -18,12 +18,12 @@ _parent(NULL)
 {
 }
 
-bst_node::~bst_node ()
+BstNode::~BstNode ()
 {
     clear();
 }
 
-void bst_node::clear ()
+void BstNode::clear ()
 {
     _num = 0;
     _left = NULL;
@@ -31,7 +31,7 @@ void bst_node::clear ()
     _parent = NULL;
 }
 
-void bst_node::display ()
+void BstNode::display ()
 {
     cout << "this = " << this
          << ", _num = " << _num 
@@ -41,37 +41,37 @@ void bst_node::display ()
          << "." << endl;
 }
 
-int bst_node::num ()
+int BstNode::num ()
 {
     return _num;
 }
 
-bst_node * bst_node::left ()
+BstNode * BstNode::left ()
 {
     return _left;
 }
 
-bst_node * bst_node::right ()
+BstNode * BstNode::right ()
 {
     return _right;
 }
 
-bst_node * bst_node::parent ()
+BstNode * BstNode::parent ()
 {
     return _parent;
 }
 
-void bst_node::add_left (class bst_node * n)
+void BstNode::add_left (class BstNode * n)
 {
     _left = n;
 }
 
-void bst_node::add_right (class bst_node * n)
+void BstNode::add_right (class BstNode * n)
 {
     _right = n;
 }
 
-void bst_node::add_parent (class bst_node * n)
+void BstNode::add_parent (class BstNode * n)
 {
     _parent = n;
 }

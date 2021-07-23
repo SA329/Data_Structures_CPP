@@ -5,15 +5,15 @@
 #define DUMMY_POINTER_RIGHT 0x67891
 #define DUMMY_POINTER_PARENT 0x01357
 
-int test_bst_node ()
+int test_BstNode ()
 {
-    bst_node n;
+    BstNode n;
     ASSERT(n.num()==0);
     ASSERT(n.left()==NULL);
     ASSERT(n.right()==NULL);
     ASSERT(n.parent()==NULL);
 
-    bst_node n2(100);
+    BstNode n2(100);
     ASSERT(n2.num()==100);
     ASSERT(n2.left()==NULL);
     ASSERT(n2.right()==NULL);
@@ -24,7 +24,7 @@ int test_bst_node ()
 
 int test_clear ()
 {
-    bst_node n;
+    BstNode n;
 
     n.clear();
     ASSERT(n.num()==0);
@@ -37,8 +37,8 @@ int test_clear ()
 
 int test_add_left ()
 {
-    bst_node n;
-    bst_node * dummy = (bst_node *) DUMMY_POINTER_LEFT;
+    BstNode n;
+    BstNode * dummy = (BstNode *) DUMMY_POINTER_LEFT;
     n.add_left(dummy);
     ASSERT(n.left()==dummy);
 
@@ -47,8 +47,8 @@ int test_add_left ()
 
 int test_add_right ()
 {
-    bst_node n;
-    bst_node * dummy = (bst_node *) DUMMY_POINTER_RIGHT;
+    BstNode n;
+    BstNode * dummy = (BstNode *) DUMMY_POINTER_RIGHT;
     n.add_right(dummy);
     ASSERT(n.right()==dummy);
 
@@ -57,8 +57,8 @@ int test_add_right ()
 
 int test_add_parent ()
 {
-    bst_node n;
-    bst_node * dummy = (bst_node *) DUMMY_POINTER_PARENT;
+    BstNode n;
+    BstNode * dummy = (BstNode *) DUMMY_POINTER_PARENT;
     n.add_parent(dummy);
     ASSERT(n.parent()==dummy);
 
@@ -67,7 +67,7 @@ int test_add_parent ()
 
 int main (int argc, char * argv[])
 {
-    ASSERT(test_bst_node()==0);
+    ASSERT(test_BstNode()==0);
     ASSERT(test_clear()==0);
     ASSERT(test_add_left()==0);
     ASSERT(test_add_right()==0);
