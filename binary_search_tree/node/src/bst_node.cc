@@ -46,17 +46,17 @@ int BstNode::num () const
     return _num;
 }
 
-const BstNode * BstNode::left () const
+BstNode * BstNode::left () const
 {
     return _left;
 }
 
-const BstNode * BstNode::right () const
+BstNode * BstNode::right () const
 {
     return _right;
 }
 
-const BstNode * BstNode::parent () const
+BstNode * BstNode::parent () const
 {
     return _parent;
 }

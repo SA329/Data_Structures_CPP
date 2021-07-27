@@ -12,9 +12,9 @@ class BstNode
 
     // getters:
     int num () const;
-    const BstNode * left () const;
-    const BstNode * right () const;
-    const BstNode * parent () const;
+    BstNode * left () const;
+    BstNode * right () const;
+    BstNode * parent () const;
 
     // setters:
     void addLeft (BstNode *);
