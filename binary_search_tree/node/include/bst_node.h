@@ -8,25 +8,25 @@ class BstNode
     virtual ~BstNode ();
 
     void clear ();
-    virtual void display ();
+    virtual void display () const;
 
     // getters:
-    int num ();
-    BstNode * left ();
-    BstNode * right ();
-    BstNode * parent ();
+    int num () const;
+    const BstNode * left () const;
+    const BstNode * right () const;
+    const BstNode * parent () const;
 
     // setters:
-    void addLeft (class BstNode *);
-    void addRight (class BstNode *);
-    void addParent (class BstNode *);
+    void addLeft (BstNode *);
+    void addRight (BstNode *);
+    void addParent (BstNode *);
 
     private:
     void initialize ();
 
     private:
     int _num;
-    class BstNode * _left;
-    class BstNode * _right;
-    class BstNode * _parent;
+    BstNode * _left;
+    BstNode * _right;
+    BstNode * _parent;
 };

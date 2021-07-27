@@ -31,7 +31,7 @@ void BstNode::clear ()
     _parent = NULL;
 }
 
-void BstNode::display ()
+void BstNode::display () const
 {
     cout << "this = " << this
          << ", _num = " << _num 
@@ -41,37 +41,37 @@ void BstNode::display ()
          << "." << endl;
 }
 
-int BstNode::num ()
+int BstNode::num () const
 {
     return _num;
 }
 
-BstNode * BstNode::left ()
+const BstNode * BstNode::left () const
 {
     return _left;
 }
 
-BstNode * BstNode::right ()
+const BstNode * BstNode::right () const
 {
     return _right;
 }
 
-BstNode * BstNode::parent ()
+const BstNode * BstNode::parent () const
 {
     return _parent;
 }
 
-void BstNode::addLeft (class BstNode * n)
+void BstNode::addLeft (BstNode * n)
 {
     _left = n;
 }
 
-void BstNode::addRight (class BstNode * n)
+void BstNode::addRight (BstNode * n)
 {
     _right = n;
 }
 
-void BstNode::addParent (class BstNode * n)
+void BstNode::addParent (BstNode * n)
 {
     _parent = n;
 }
