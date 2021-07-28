@@ -27,32 +27,31 @@ class Bst
     ReturnCode insert (int);
     ReturnCode remove (int);
 
-    ReturnCode search (int);
+    ReturnCode search (int) const;
 
     private:
     BstNode * _root;
     unsigned int _size;
 
     void clearImpl (BstNode *);
-    void disconnectNodeFromParent (BstNode *);
-    BstNode * findNodeToRemove (int);
+    void disconnectNodeFromParent (BstNode &);
+    BstNode * findNodeToRemove (int) const;
     BstNode * getInsertionPoint (int) const;
     ReturnCode insertNode (BstNode &);
-    bool isLeftChild (BstNode *);
+    ReturnCode insertNode (BstNode *);
+    bool isLeftChild (BstNode &) const;
     void moveToNextNode (int, BstNode **) const;
-    ReturnCode removeGeneralCase (BstNode *);
-    ReturnCode removeNode (BstNode *);
-    ReturnCode removeRoot (BstNode *);
-    ReturnCode reinsertSubtreesOfNode (BstNode *);
-    ReturnCode rootTreeToLeftSubtree (BstNode *);
-    void rootTreeToRightSubtree (BstNode *);
-    BstNode * searchImpl (BstNode *, int);
+    ReturnCode removeGeneralCase (BstNode &);
+    ReturnCode removeNode (BstNode &);
+    ReturnCode removeRoot (BstNode &);
+    ReturnCode reinsertSubtreesOfNode (BstNode &);
+    ReturnCode rootTreeToLeftSubtree (BstNode &);
+    void rootTreeToRightSubtree (BstNode &);
+    const BstNode * searchImpl (BstNode *, int) const;
     void setNewRoot (BstNode *);
     void setNode (BstNode &, BstNode &);
     bool isRoot (const BstNode &) const;
 
 };
-
-//typedef enum bst_return_code Bst_Return_Code;
 
 #include "bst_helper_functions.h"

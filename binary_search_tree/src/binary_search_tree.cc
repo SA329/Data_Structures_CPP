@@ -77,6 +77,14 @@ Bst::ReturnCode Bst::insertNode (BstNode & n)
     return SUCCESS;
 }
 
+Bst::ReturnCode Bst::insertNode (BstNode * n)
+{
+    if (n == NULL)
+        return NODE_NULL;
+
+    return insertNode(*n);
+}
+
 void Bst::setNode (BstNode & p, BstNode & n)
 {
     n.addParent(&p);
@@ -112,197 +120,132 @@ void Bst::moveToNextNode (int num, BstNode ** n) const // *n should never be NUL
 
 Bst::ReturnCode Bst::remove (int num)
 {
-    /*
-    TODO
-    if (t == NULL)
-        return TREE_NULL;
-
-    if (bst_is_empty(t))
+    if (isEmpty())
         return TREE_EMPTY;
 
-    struct bst_node * n = bst_find_node_to_remove(t, num);
+    BstNode * n = findNodeToRemove(num);
     if (n == NULL)
         return NODE_NOT_FOUND;
 
-    Bst_Return_Code result = bst_remove_node(t, n);
+    ReturnCode result = removeNode(*n);
     if (result != SUCCESS)
         return result;
 
-    t->size--;
-    bst_node_delete(&n);
+    _size--;
+    delete n;
 
     return result;
-    */
-
-    return SUCCESS;
 }
 
-BstNode * Bst::findNodeToRemove (int num)
+BstNode * Bst::findNodeToRemove (int num) const
 {
-   /*
-   TODO
-   struct bst_node * n = t->root;
-   for (; n != NULL; bst_move_to_next_node(num, &n))
+   BstNode * n = _root;
+   for (; n != NULL; moveToNextNode(num, &n))
    {
-        if (num == bst_node_num(n))
+        if (num == n->num())
             break;
    }
 
    return n;
-   */
-
-   return NULL;
 }
 
-Bst::ReturnCode Bst::removeNode (BstNode * n)
+Bst::ReturnCode Bst::removeNode (BstNode & n)
 {
-    /*
-    TODO
-    if (bst_is_root(n))
-        return bst_remove_root(t, n);
+    if (isRoot(n))
+        return removeRoot(n);
     else
-        return bst_remove_general_case(t, n);
-    */
-
-    return SUCCESS;
+        return removeGeneralCase(n);
 }
 
-Bst::ReturnCode Bst::removeRoot (BstNode * n)
+Bst::ReturnCode Bst::removeRoot (BstNode & n)
 {
-    /*
-    TODO
-    if (bst_node_left(n) != NULL)
-        return bst_root_tree_to_left_subtree(t, n);
+    if (n.left() != NULL)
+        return rootTreeToLeftSubtree(n);
     else
-        bst_root_tree_to_right_subtree(t, n);
-
-    return SUCCESS;
-    */
+        rootTreeToRightSubtree(n);
 
     return SUCCESS;
 }
 
-Bst::ReturnCode Bst::rootTreeToLeftSubtree (BstNode * n)
+Bst::ReturnCode Bst::rootTreeToLeftSubtree (BstNode & n)
 {
-    /*
-    TODO
-    bst_set_new_root(t, bst_node_left(n));
+    setNewRoot(n.left());
 
-    if (bst_node_right(n) != NULL)
+    if (n.right() != NULL)
     {
-        bst_node_set_parent(bst_node_right(n), NULL);
-        return bst_insert_node(t, bst_node_right(n));
+        n.right()->addParent(NULL);
+        return insertNode(n.right());
     }
-
-    return SUCCESS;
-    */
 
     return SUCCESS;
 }
 
 void Bst::setNewRoot (BstNode * n)
 {
-    /*
-    TODO
-    t->root = n;
-    if (t->root != NULL)
-        bst_node_set_parent(t->root, NULL);
-    */
+    _root = n;
+    if (_root != NULL)
+        _root->addParent(NULL);
 }
 
-void Bst::rootTreeToRightSubtree (BstNode * n)
+void Bst::rootTreeToRightSubtree (BstNode & n)
 {
-    /*
-    TODO
-    bst_set_new_root(t, bst_node_right(n));
-    */
+    setNewRoot(n.right());
 }
 
-Bst::ReturnCode Bst::removeGeneralCase (BstNode * n)
+Bst::ReturnCode Bst::removeGeneralCase (BstNode & n)
 {
-    /*
-    TODO
-    bst_disconnect_node_from_parent(n);
-    return bst_reinsert_subtrees_of_node(t, n);
-    */
-
-    return SUCCESS;
+    disconnectNodeFromParent(n);
+    return reinsertSubtreesOfNode(n);
 }
 
-void Bst::disconnectNodeFromParent (BstNode * n)
+void Bst::disconnectNodeFromParent (BstNode & n)
 {
-    /*
-    TODO
-    if (bst_is_left_child(n))
-        bst_node_set_left(bst_node_parent(n), NULL);
+    if (isLeftChild(n))
+        n.parent()->addLeft(NULL);
     else
-        bst_node_set_right(bst_node_parent(n), NULL);
-    */
+        n.parent()->addRight(NULL);
 }
 
-bool Bst::isLeftChild (BstNode * n)
+bool Bst::isLeftChild (BstNode & n) const
 {
-    /*
-    TODO
-    struct bst_node * left_child_of_n = bst_node_left(bst_node_parent(n));
+    const BstNode * const left_child_of_n = n.parent()->left();
     if (left_child_of_n == NULL)
         return false;
 
-    return bst_node_num(left_child_of_n) == bst_node_num(n);
-    */
-
-    return true;
+    return left_child_of_n->num() == n.num();
 }
 
-Bst::ReturnCode Bst::reinsertSubtreesOfNode (BstNode * n)
+Bst::ReturnCode Bst::reinsertSubtreesOfNode (BstNode & n)
 {
-    /*
-    TODO
-    Bst_Return_Code result = SUCCESS;
-    if (bst_node_left(n) != NULL)
-        result = bst_insert_node(t, bst_node_left(n));
+    ReturnCode result = SUCCESS;
+    if (n.left() != NULL)
+        result = insertNode(n.left());
 
-    if (result == SUCCESS && bst_node_right(n) != NULL) 
-        result = bst_insert_node(t, bst_node_right(n));
+    if (result == SUCCESS && n.right() != NULL) 
+        result = insertNode(n.right());
 
     return result;
-    */
-
-    return SUCCESS;
 }
 
-Bst::ReturnCode Bst::search (int num)
+Bst::ReturnCode Bst::search (int num) const
 {
-    /*
-    TODO
-    if (t == NULL)
-        return TREE_NULL;
-
-    if (bst_search_impl(t->root, num) != NULL)
+    if (searchImpl(_root, num) != NULL)
         return NODE_FOUND;
 
     return NODE_NOT_FOUND;
-    */
-
-    return SUCCESS;
 }
 
-BstNode * Bst::searchImpl (BstNode * n, int num)
+const BstNode * Bst::searchImpl (BstNode * n, int num) const
 {
-    /*
-    TODO
     if (n == NULL)
         return n; 
 
-    if (num < bst_node_num(n))
-        return bst_search_impl(bst_node_left(n), num);
-    else if (num > bst_node_num(n))
-        return bst_search_impl(bst_node_right(n), num);
+    if (num < n->num())
+        return searchImpl(n->left(), num);
+    else if (num > n->num())
+        return searchImpl(n->right(), num);
     else // equal
         return n;
-    */
-
-    return NULL;
 }
 
 bool Bst::isRoot (const BstNode &n) const
