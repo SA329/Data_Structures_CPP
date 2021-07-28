@@ -3,13 +3,17 @@
     • create setup script and create github repository for scripts
     • create a pretty printer for trees
     • fix test generator to ignore prefix of return type
-    • Maybe: Create script to automatically generate forward declarations with input of hdr and src file!
-    • In sll, slls, queue, and stack, implement the more thorough check integrity implemented in dll.
+    • Maybe: Create script to automatically generate forward declarations with 	input of hdr and src file!
+    • In sll, slls, queue, and stack, implement the more thorough check integrity 	implemented in dll.
     • give setup script a .rc file.
     • add helper function hdr file for sll
-    • modify slls to avoid problem of not hooking up head properly as faced in dll and sll.
+    • modify slls to avoid problem of not hooking up head properly as faced in dll 	and sll.
     • test.h needs a repository.
     • running commands within vi
+
+7/27/2021
+(C++-bst) We finished porting the c implementation of all methods in the main c++ file. Next time we have to port the c implementation of check_integrity_functions and display_functions to c++, as well as test.
+A reminder: Do two-factor authentication for GitHub!!
 
 7/26/2021
 (C++-bst) Introduced constness, both for arguments passed to methods and for the object itself. This had a ripple effect so we had to modify a number of methods in both Bst and BstNode, and will continue to do so as we implement more methods and embrace constness.
