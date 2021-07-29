@@ -10,14 +10,16 @@
     • modify slls to avoid problem of not hooking up head properly as faced in dll 	and sll.
     • test.h needs a repository.
     • running commands within vi
+    
+7/28/2021
+(C++-bst) Forgot to do a git pull. We finished porting all c implementation of all methods in the main c++ file and added display functions to the main .cc file. Created a new class: IntegrityChecker for check integrity functions. We have started to implement the IntegrityChecker functions. Will have to continue doing that next time.
+A reminder: Do two-factor authentication for GitHub!!
 
 7/27/2021
 (C++-bst) We finished porting the c implementation of all methods in the main c++ file. Next time we have to port the c implementation of check_integrity_functions and display_functions to c++, as well as test.
-A reminder: Do two-factor authentication for GitHub!!
 
 7/26/2021
 (C++-bst) Introduced constness, both for arguments passed to methods and for the object itself. This had a ripple effect so we had to modify a number of methods in both Bst and BstNode, and will continue to do so as we implement more methods and embrace constness.
-A reminder: Do two-factor authentication for GitHub!!
 
 7/22/2021
 (C++-bst) We starting porting the c implementation of bst to c++. We also changed the method and class names to use CamelCase, in both Bst and BstNode. Next time we have to port the implementation of remove and search to c++, as well as display_functions and check_integrity_functions.
