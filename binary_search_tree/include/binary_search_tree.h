@@ -24,6 +24,11 @@ class Bst
     bool isEmpty () const;
     unsigned int size () const;
 
+    void display () const;
+    void displayPreorder () const;
+    void displayPostorder () const;
+    void displayBfs () const;
+
     ReturnCode insert (int);
     ReturnCode remove (int);
 
@@ -35,6 +40,10 @@ class Bst
 
     void clearImpl (BstNode *);
     void disconnectNodeFromParent (BstNode &);
+    void displayBfsImpl (const BstNode *) const;
+    void displayInorderImpl (const BstNode *) const;
+    void displayPostorderImpl (const BstNode *) const;
+    void displayPreorderImpl (const BstNode *) const;
     BstNode * findNodeToRemove (int) const;
     BstNode * getInsertionPoint (int) const;
     ReturnCode insertNode (BstNode &);
@@ -47,11 +56,10 @@ class Bst
     ReturnCode reinsertSubtreesOfNode (BstNode &);
     ReturnCode rootTreeToLeftSubtree (BstNode &);
     void rootTreeToRightSubtree (BstNode &);
-    const BstNode * searchImpl (BstNode *, int) const;
+    const BstNode * searchImpl (const BstNode *, int) const;
     void setNewRoot (BstNode *);
     void setNode (BstNode &, BstNode &);
     bool isRoot (const BstNode &) const;
 
+    friend class IntegrityChecker;
 };
-
-#include "bst_helper_functions.h"

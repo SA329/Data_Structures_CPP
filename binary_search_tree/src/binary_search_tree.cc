@@ -2,6 +2,8 @@
 #include "../node/include/bst_node.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
+using namespace std;
 
 #define CHECK_NULL(n, error_string, ret_value) \
     if (n == NULL) \
@@ -235,7 +237,7 @@ Bst::ReturnCode Bst::search (int num) const
     return NODE_NOT_FOUND;
 }
 
-const BstNode * Bst::searchImpl (BstNode * n, int num) const
+const BstNode * Bst::searchImpl (const BstNode * n, int num) const
 {
     if (n == NULL)
         return n; 
@@ -251,6 +253,86 @@ const BstNode * Bst::searchImpl (BstNode * n, int num) const
 bool Bst::isRoot (const BstNode &n) const
 {
     return n.parent() == NULL;
+}
+
+void Bst::display () const
+{
+    cout << "_size = " << _size << endl;
+    displayInorderImpl(_root);
+}
+
+void Bst::displayPreorder () const
+{
+    cout << "_size = " << _size << endl;
+    displayPreorderImpl(_root);
+}
+
+void Bst::displayPostorder () const
+{
+    cout << "_size = " << _size << endl;
+    displayPostorderImpl(_root);
+}
+
+void Bst::displayBfs () const
+{
+    cout << "_size = " << _size << endl;
+    displayBfsImpl(_root);
+}
+
+void Bst::displayBfsImpl (const BstNode * n) const
+{
+    // TODO
+}
+
+void Bst::displayPreorderImpl (const BstNode * n) const
+{
+    if (n == NULL)
+    {
+        cout << __LINE__ << ": n was NULL" << endl;
+        return;
+    }
+
+    n->display();
+
+    if (n->left() != NULL)
+        displayPreorderImpl(n->left());
+
+    if (n->right() != NULL)
+        displayPreorderImpl(n->right());
+}
+
+void Bst::displayPostorderImpl (const BstNode * n) const
+{
+    if (n == NULL)
+    {
+        cout << __LINE__ << ": n was NULL" << endl;
+        return;
+    }
+
+    if (n->left() != NULL)
+        displayPostorderImpl(n->left());
+
+    if (n->right() != NULL)
+        displayPostorderImpl(n->right());
+
+    n->display();
+}
+
+void Bst::displayInorderImpl (const BstNode * n) const
+{
+    if (n == NULL)
+    {
+        cout << __LINE__ << ": n was NULL" << endl;
+        return;
+    }
+
+    if (n->left() != NULL)
+        displayInorderImpl(n->left());
+
+    n->display();
+
+    if (n->right() != NULL)
+        displayInorderImpl(n->right());
 }
 
 /*
