@@ -9,16 +9,16 @@ LDIR=./node/
 
 OUTPUTFILE=libbstcc.a
 
-_DEPS=binary_search_tree.h bst_helper_functions.h
+_DEPS=binary_search_tree.h integrity_checker.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_DEPSC=bst_display_functions.cc bst_check_integrity_functions.cc
+_DEPSC=integrity_checker.cc
 DEPSC = $(patsubst %,$(SDIR)/%,$(_DEPSC))
 
-_OBJ=binary_search_tree.o
+_OBJ=binary_search_tree.o integrity_checker.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-_SRC=binary_search_tree.cc bst_display_functions.cc bst_check_integrity_functions.cc
+_SRC=binary_search_tree.cc integrity_checker.cc
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 _TEST=test.cc

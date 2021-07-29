@@ -2,6 +2,8 @@
 #include "../node/include/bst_node.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
+using namespace std;
 
 #define CHECK_NULL(n, error_string, ret_value) \
     if (n == NULL) \
@@ -271,43 +273,110 @@ Bst::ReturnCode Bst::reinsertSubtreesOfNode (BstNode * n)
     return SUCCESS;
 }
 
-Bst::ReturnCode Bst::search (int num)
+Bst::ReturnCode Bst::search (int num) const
 {
-    /*
-    TODO
-    if (t == NULL)
-        return TREE_NULL;
-
-    if (bst_search_impl(t->root, num) != NULL)
+    if (searchImpl(_root, num) != NULL)
         return NODE_FOUND;
 
     return NODE_NOT_FOUND;
-    */
-
-    return SUCCESS;
 }
 
-BstNode * Bst::searchImpl (BstNode * n, int num)
+const BstNode * Bst::searchImpl (const BstNode * n, int num) const
 {
-    /*
-    TODO
     if (n == NULL)
         return n; 
 
-    if (num < bst_node_num(n))
-        return bst_search_impl(bst_node_left(n), num);
-    else if (num > bst_node_num(n))
-        return bst_search_impl(bst_node_right(n), num);
+    if (num < n->num())
+        return searchImpl(n->left(), num);
+    else if (num > n->num())
+        return searchImpl(n->right(), num);
     else // equal
         return n;
-    */
-
-    return NULL;
 }
 
 bool Bst::isRoot (const BstNode &n) const
 {
     return n.parent() == NULL;
+}
+
+void Bst::display () const
+{
+    cout << "_size = " << _size << endl;
+    displayInorderImpl(_root);
+}
+
+void Bst::displayPreorder () const
+{
+    cout << "_size = " << _size << endl;
+    displayPreorderImpl(_root);
+}
+
+void Bst::displayPostorder () const
+{
+    cout << "_size = " << _size << endl;
+    displayPostorderImpl(_root);
+}
+
+void Bst::displayBfs () const
+{
+    cout << "_size = " << _size << endl;
+    displayBfsImpl(_root);
+}
+
+void Bst::displayBfsImpl (const BstNode * n) const
+{
+    // TODO
+}
+
+void Bst::displayPreorderImpl (const BstNode * n) const
+{
+    if (n == NULL)
+    {
+        cout << __LINE__ << ": n was NULL" << endl;
+        return;
+    }
+
+    n->display();
+
+    if (n->left() != NULL)
+        displayPreorderImpl(n->left());
+
+    if (n->right() != NULL)
+        displayPreorderImpl(n->right());
+}
+
+void Bst::displayPostorderImpl (const BstNode * n) const
+{
+    if (n == NULL)
+    {
+        cout << __LINE__ << ": n was NULL" << endl;
+        return;
+    }
+
+    if (n->left() != NULL)
+        displayPostorderImpl(n->left());
+
+    if (n->right() != NULL)
+        displayPostorderImpl(n->right());
+
+    n->display();
+}
+
+void Bst::displayInorderImpl (const BstNode * n) const
+{
+    if (n == NULL)
+    {
+        cout << __LINE__ << ": n was NULL" << endl;
+        return;
+    }
+
+    if (n->left() != NULL)
+        displayInorderImpl(n->left());
+
+    n->display();
+
+    if (n->right() != NULL)
+        displayInorderImpl(n->right());
 }
 
 /*
