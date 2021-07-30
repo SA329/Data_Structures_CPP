@@ -11,9 +11,12 @@
     • test.h needs a repository.
     • running commands within vi
     
+7/29/2021
+(C++-bst) Sorted out the git pull error previously faced. Continued porting the c implementation of IntegrityChecker methods to c++. It is still a work in progress and we will continue next time.
+A reminder: Do two-factor authentication for GitHub!!
+    
 7/28/2021
 (C++-bst) Forgot to do a git pull. We finished porting all c implementation of all methods in the main c++ file and added display functions to the main .cc file. Created a new class: IntegrityChecker for check integrity functions. We have started to implement the IntegrityChecker functions. Will have to continue doing that next time.
-A reminder: Do two-factor authentication for GitHub!!
 
 7/27/2021
 (C++-bst) We finished porting the c implementation of all methods in the main c++ file. Next time we have to port the c implementation of check_integrity_functions and display_functions to c++, as well as test.
