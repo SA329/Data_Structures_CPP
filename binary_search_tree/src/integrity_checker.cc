@@ -1,11 +1,10 @@
 #include "../include/integrity_checker.h"
 #include "../include/binary_search_tree.h"
 #include "../node/include/bst_node.h"
-#include <cstddef>
 #include <iostream>
 using namespace std;
 
-// Public Functions:
+// Public Methods:
 IntegrityChecker::IntegrityChecker ()
 {
 }
@@ -14,15 +13,15 @@ IntegrityChecker::~IntegrityChecker ()
 {
 }
 
-bool IntegrityChecker::checkIntegrity (const Bst & t) const
+bool IntegrityChecker::execute (const Bst & t) const
 {
     if (t.isEmpty())
-        return checkEmptyTreeIntegrity(t);
+        return checkEmptyTree(t);
 
-    if (!checkParentIntegrity(t, t._root))
+    if (!checkParent(t, t._root))
         return false;
 
-    if (!checkOrderIntegrity(*(t._root)))
+    if (!checkOrder(*(t._root)))
         return false;
 
     return true;
@@ -41,18 +40,18 @@ void bst_break_parent_integrity (struct bst * t, int num)
 }
 
 */
-// Private Functions:
-bool IntegrityChecker::checkEmptyTreeIntegrity (const Bst & t) const
+// Private Methods:
+bool IntegrityChecker::checkEmptyTree (const Bst & t) const
 {
     if (t._root != NULL)
     {
-        cerr << "ERROR: IntegrityChecker::checkIntegrity(...): tree is empty but root is not NULL!" << endl;
+        cerr << "ERROR: IntegrityChecker::execute(...): tree is empty but root is not NULL!" << endl;
         return false;
     }
 
     if (t.size() != 0)
     {
-        cerr << "ERROR: IntegrityChecker::checkIntegrity(...): tree is empty but size is not 0!" << endl;
+        cerr << "ERROR: IntegrityChecker::execute(...): tree is empty but size is not 0!" << endl;
         return false;
     }
 
@@ -95,63 +94,56 @@ struct bst_node * bst_find_node_to_break (struct bst * t, int num)
 
     return result;
 }
-
-bool bst_check_integrity_less_than (struct bst_node * s, int num)
-{
-    if (s == NULL)
-        return true;
-
-    if (!bst_check_less_than(s, num))
-        return false;
-
-    return 
-        bst_check_integrity_less_than(bst_node_left(s), num) && 
-        bst_check_integrity_less_than(bst_node_right(s), num);
-}
-
-bool bst_check_less_than (struct bst_node * n, int num)
-{
-    if (n == NULL)
-        return true;
-
-    if (bst_node_num(n) > num)
-    {
-        fprintf(stderr, "ERROR: bst_check_less_than(...): expected %d < %d\n", bst_node_num(n), num);
-        return false;
-    }
-
-    return true;
-}
-
-bool bst_check_integrity_greater_than (struct bst_node * s, int num)
-{
-    if (s == NULL)
-        return true;
-
-    if (!bst_check_greater_than(s, num))
-        return false;
-
-    return 
-        bst_check_integrity_greater_than(bst_node_left(s), num) && 
-        bst_check_integrity_greater_than(bst_node_right(s), num);
-}
-
-bool bst_check_greater_than (struct bst_node * n, int num)
-{
-    if (n == NULL)
-        return true;
-
-    if (bst_node_num(n) < num)
-    {
-        fprintf(stderr, "ERROR: bst_check_greater_than(...): expected %d > %d\n", bst_node_num(n), num);
-        return false;
-    }
-
-    return true;
-}
-
 */
-bool IntegrityChecker::checkParentIntegrity (const Bst & t, const BstNode * n) const
+
+bool IntegrityChecker::checkLessThan (const BstNode * s, int num) const
+{
+    if (s == NULL)
+        return true;
+
+    if (!isLessThan(*s, num))
+        return false;
+
+    return 
+        checkLessThan(s->left(), num) && checkLessThan(s->right(), num);
+}
+
+bool IntegrityChecker::isLessThan (const BstNode & n, int num) const
+{
+    if (n.num() > num)
+    {
+        cerr << "ERROR: IntegrityChecker::isLessThan(...): expected " << n.num() << " < " << num << endl;
+        return false;
+    }
+
+    return true;
+}
+
+bool IntegrityChecker::checkGreaterThan (const BstNode * s, int num) const
+{
+    if (s == NULL)
+        return true;
+
+    if (!isGreaterThan(*s, num))
+        return false;
+
+    return 
+        checkGreaterThan(s->left(), num) && 
+        checkGreaterThan(s->right(), num);
+}
+
+bool IntegrityChecker::isGreaterThan (const BstNode & n, int num) const
+{
+    if (n.num() < num)
+    {
+        cerr << "ERROR: IntegrityChecker::isGreaterThan(...): expected " << n.num() << " > " << num << endl;
+        return false;
+    }
+
+    return true;
+}
+
+bool IntegrityChecker::checkParent (const Bst & t, const BstNode * n) const
 {
     if (n == NULL)
         return true;
@@ -159,21 +151,21 @@ bool IntegrityChecker::checkParentIntegrity (const Bst & t, const BstNode * n) c
     if (!(rootNodeParentIsNull(t, *n) && nodeParentIsNotNull(t, *n)))
         return false;
 
-    return checkParentIntegrity(t, n->left()) && 
-           checkParentIntegrity(t, n->right());
+    return checkParent(t, n->left()) && 
+           checkParent(t, n->right());
 
     return true;
 }
 
-/*
-bool bst_node_parent_is_not_null (
-    struct bst * t, struct bst_node * n)
+bool IntegrityChecker::nodeParentIsNotNull (
+    const Bst & t, 
+    const BstNode & n) const
 {
-    if (n != t->root)
+    if (&n != t._root)
     {
-        if (bst_node_parent(n) == NULL)
+        if (n.parent() == NULL)
         {
-            fprintf(stderr, "ERROR: bst_check_order_integrity(...): node's parent is NULL (%p)\n", bst_node_parent(n));
+            cerr << "ERROR: IntegrityChecker::execute(...): node's parent is NULL! " << n.parent() << endl;
             return false;
         }
     }
@@ -181,13 +173,14 @@ bool bst_node_parent_is_not_null (
     return true;
 }
 
-bool bst_root_node_parent_is_null (struct bst * t, struct bst_node * n)
+bool IntegrityChecker::rootNodeParentIsNull (
+    const Bst & t, const BstNode & n) const
 {
-    if (n == t->root)
+    if (&n == t._root)
     {
-        if (bst_node_parent(n) != NULL)
+        if (n.parent() != NULL)
         {
-            fprintf(stderr, "ERROR: bst_check_order_integrity(...): root's parent is not NULL (%p)\n", bst_node_parent(n));
+            cerr << "ERROR: IntegrityChecker:: execute(...): root's parent is not NULL! " << n.parent() << endl;
             return false;
         }
     }
@@ -195,33 +188,50 @@ bool bst_root_node_parent_is_null (struct bst * t, struct bst_node * n)
     return true;
 }
 
-bool bst_check_order_integrity_impl (struct bst_node * p)
+bool IntegrityChecker::checkOrderImpl (const BstNode * p) const
 {
     if (p == NULL)
         return true;
 
-    int p_num = bst_node_num(p);
-    struct bst_node * left = bst_node_left(p);
-    struct bst_node * right = bst_node_right(p);
+    int p_num = p->num();
+    if (p->left() != NULL)
+    {
+        const BstNode & leftNode = *(p->left());
+    }
+    BstNode * left = p->left();
+    BstNode * right = p->right();
 
-    if (!(bst_check_less_than(left, p_num) && 
-          bst_check_greater_than(right, p_num)))
-        return false;
+    if (left == NULL)
+    {
+        if (right == NULL)
+            return true;
+        else 
+        {
+            if (!isGreaterThan(*right, p_num))
+                return false;
+            // else: keep going
+        }
+    }
+    else
+    {
+        if (right == NULL)
+            return !isLessThan(*left, p_num);
+        else 
+        {
+            if (!(isLessThan(*left, p_num) && isGreaterThan(*right, p_num)))
+                return false;
+            // else: keep going
+        }
+    }
 
-    return bst_check_order_integrity_impl(left) &&
-           bst_check_order_integrity_impl(right);
+    return checkOrderImpl(left) && checkOrderImpl(right);
 }
 
-*/
-bool IntegrityChecker::checkOrderIntegrity (const BstNode & p) const
+bool IntegrityChecker::checkOrder (const BstNode & p) const
 {
-    /*
-    int num = bst_node_num(p);
+    int num = p.num();
 
-    return bst_check_integrity_less_than(bst_node_left(p), num) &&
-           bst_check_integrity_greater_than(bst_node_right(p), num) &&
-           bst_check_order_integrity_impl(p);
-    */
-
-    return true;
+    return checkLessThan(p.left(), num) &&
+           checkGreaterThan(p.right(), num) &&
+           checkOrderImpl(&p);
 }
