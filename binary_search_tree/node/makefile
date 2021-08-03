@@ -6,7 +6,7 @@ IDIR=include
 SDIR=src
 TDIR=tst
 
-OUTPUTFILE=libbst_node.a
+OUTPUTFILE=libbstcc_node.a
 
 _DEPS=bst_node.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
@@ -36,4 +36,4 @@ test: $(TEST) $(OBJ)
 .PHONY: clean 
 
 clean:
-	rm -f $(ODIR)/*.o *~ core 
+	rm -f $(ODIR)/*.o *~ core $(OUTPUTFILE) *~ core

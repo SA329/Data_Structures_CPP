@@ -1,66 +1,65 @@
 #include "../../../tst/test.h"
 #include "../include/binary_search_tree.h"
+#include "../include/integrity_checker.h"
 
-struct bst * gt = NULL; // our global binary search tree
+IntegrityChecker gc;
+Bst * gt; // our global binary search tree
 
-#define BST_NBR_TREE_DATA_ELEMENTS 15
-int tree_data[BST_NBR_TREE_DATA_ELEMENTS] =
+#define NBR_TREE_DATA_ELEMENTS 15
+int treeData[NBR_TREE_DATA_ELEMENTS] =
 {
     10, 5, 1, 7, 9, 6, 20, 18, 30, 25, 22, 28, 35, 33, 40
 };
-#define BST_EXTRA_DATA_NUM 99
+#define EXTRA_DATA_NUM 99
 
-bool load_tree (struct bst * t)
+bool loadTree (Bst & t)
 {
-    for (int i = 0; i < BST_NBR_TREE_DATA_ELEMENTS; ++i)
+    for (int i = 0; i < NBR_TREE_DATA_ELEMENTS; ++i)
     {
-        if (bst_insert(t, tree_data[i]) != BST_SUCCESS)
+        if (t.insert(treeData[i]) != Bst::SUCCESS)
             return false;
     }
 
-    return bst_check_integrity(t);
+    return gc.execute(t);
 }
 
 bool setup ()
 {
-    gt = bst_create();
+    gt = new Bst;
     return gt != NULL;
 }
  
 bool teardown ()
 {
-    bst_delete(&gt);
-    return gt == NULL;
+    delete gt;
+    gt = NULL;
+    return true;
 }
 
-int test_bst_create ()
+int testBstCreate ()
 {
-    struct bst * t = bst_create();
-    ASSERT(t!=NULL);
-    ASSERT(bst_is_empty(t));
-    ASSERT(bst_check_integrity(t));
+    Bst t;
+    ASSERT(t.isEmpty());
+    ASSERT(gc.execute(t));
 
-    bst_delete(&t);
-    ASSERT(t==NULL);
+    /*
+    //Commenting this because it generates 2 errors. Uncomment this if you want to see them.
 
-    /* Commenting this because it generates 2 errors. Uncomment this if you want to see them.
     // broken root node's parent
-    t = bst_create();
-    ASSERT(t!=NULL);
+    Bst r;
+    ASSERT(r.isEmpty());
+    ASSERT(gc.execute(r));
 
-    ASSERT(load_tree(t));
-    bst_break_parent_integrity(t, 0);
-    ASSERT(!bst_check_integrity(t));
-
-    bst_delete(&t);
-    ASSERT(t==NULL);
+    ASSERT(loadTree(r));
+    gc.breakParent(&r, 0);
+    ASSERT(!(gc.execute(r)));
 
     // broken non-root node's parent
     ASSERT(setup());
 
-    ASSERT(load_tree(gt));
-    bst_break_parent_integrity(gt, tree_data[8]);
-    ASSERT(!bst_check_integrity(gt));
+    ASSERT(loadTree(*gt));
+    gc.breakParent(gt, treeData[8]);
+    ASSERT(!(gc.execute(*gt)));
 
     ASSERT(teardown());
     */
@@ -68,6 +67,7 @@ int test_bst_create ()
     return 0;
 }
 
+/*
 int test_bst_delete ()
 {
     // tree null:
@@ -87,100 +87,91 @@ int test_bst_delete ()
 
     return 0;
 }
+*/
 
-int test_bst_clear ()
+int testBstClear ()
 {
-    ASSERT(bst_clear(NULL) == BST_TREE_NULL);
-
     ASSERT(setup());
 
     // empty tree
-    ASSERT(bst_clear(gt) == BST_SUCCESS);
-    ASSERT(bst_check_integrity(gt));
-    ASSERT(bst_is_empty(gt));
+    gt->clear();
+    ASSERT(gc.execute(*gt));
+    ASSERT(gt->isEmpty());
 
     // size 1 tree
-    ASSERT(bst_insert(gt, BST_EXTRA_DATA_NUM) == BST_SUCCESS);
-    ASSERT(bst_clear(gt) == BST_SUCCESS);
-    ASSERT(bst_is_empty(gt));
-    ASSERT(bst_check_integrity(gt));
+    ASSERT(gt->insert(EXTRA_DATA_NUM) == Bst::SUCCESS);
+    gt->clear();
+    ASSERT(gt->isEmpty());
+    ASSERT(gc.execute(*gt));
 
-    ASSERT(load_tree(gt));
+    ASSERT(loadTree(*gt));
 
     // default
-    ASSERT(bst_clear(gt) == BST_SUCCESS);
-    ASSERT(bst_is_empty(gt));
-    ASSERT(bst_check_integrity(gt));
+    gt->clear();
+    ASSERT(gt->isEmpty());
+    ASSERT(gc.execute(*gt));
 
     ASSERT(teardown());
 
     return 0;
 }
 
-int test_bst_size ()
+int testBstSize ()
 {
-    ASSERT(bst_size(NULL)==BST_INVALID);
-
     ASSERT(setup());
-    ASSERT(bst_size(gt)==0);
+    ASSERT(gt->size()==0);
 
-    ASSERT(load_tree(gt));
-    ASSERT(bst_size(gt)==BST_NBR_TREE_DATA_ELEMENTS);
+    ASSERT(loadTree(*gt));
+    ASSERT(gt->size()==NBR_TREE_DATA_ELEMENTS);
 
     ASSERT(teardown());
 
     return 0;
 }
 
-int test_bst_is_empty ()
+int testBstIsEmpty ()
 {
-    /*
-    Commenting out because this generates a warning; uncomment to see it.
-    ASSERT(!bst_is_empty(NULL));
-    */
-
     ASSERT(setup());
-    ASSERT(load_tree(gt));
-    ASSERT(!bst_is_empty(gt));
+    ASSERT(loadTree(*gt));
+    ASSERT(!gt->isEmpty());
 
-    ASSERT(bst_clear(gt)==BST_SUCCESS);
-    ASSERT(bst_is_empty(gt));
+    gt->clear();
+    ASSERT(gt->isEmpty());
 
     ASSERT(teardown());
 
     return 0;
 }
 
-int test_bst_insert ()
+int testBstInsert ()
 {
-    ASSERT(bst_insert(NULL, tree_data[0]) == BST_TREE_NULL);
-
     ASSERT(setup());
 
     // empty tree:
-    ASSERT(bst_is_empty(gt));
-    ASSERT(bst_insert(gt, BST_EXTRA_DATA_NUM)==BST_SUCCESS);
-    ASSERT(bst_check_integrity(gt));
-    ASSERT(bst_size(gt)==1);
+    ASSERT(gt->isEmpty());
+    ASSERT(gt->insert(EXTRA_DATA_NUM)==Bst::SUCCESS);
+    ASSERT(gc.execute(*gt));
+    ASSERT(gt->size()==1);
 
-    ASSERT(bst_remove(gt, BST_EXTRA_DATA_NUM)==BST_SUCCESS);
-    ASSERT(bst_check_integrity(gt));
-    ASSERT(bst_is_empty(gt));
+    ASSERT(gt->remove(EXTRA_DATA_NUM)==Bst::SUCCESS);
+    ASSERT(gc.execute(*gt));
+    ASSERT(gt->isEmpty());
 
     // general case:
-    ASSERT(load_tree(gt));
-    ASSERT(bst_size(gt)==BST_NBR_TREE_DATA_ELEMENTS);
+    ASSERT(loadTree(*gt));
+    ASSERT(gt->size()==NBR_TREE_DATA_ELEMENTS);
 
     // duplicate node:
-    ASSERT(bst_insert(gt, tree_data[5]) == BST_NODE_DUPLICATE);
-    ASSERT(bst_check_integrity(gt));
-    ASSERT(bst_size(gt)==BST_NBR_TREE_DATA_ELEMENTS);
+    ASSERT(gt->insert(treeData[5]) == Bst::NODE_DUPLICATE);
+    ASSERT(gc.execute(*gt));
+    ASSERT(gt->size()==NBR_TREE_DATA_ELEMENTS);
 
     ASSERT(teardown());
 
     return 0;
 }
 
+/*
 int test_bst_remove ()
 {
     ASSERT(bst_remove(NULL, tree_data[0]) == BST_TREE_NULL);
@@ -230,14 +221,15 @@ int test_bst_remove ()
     return 0;
 }
 
-int test_bst_search ()
+*/
+int testBstSearch ()
 {
     ASSERT(setup());
 
-    ASSERT(load_tree(gt));
-    for (int i = 0; i < BST_NBR_TREE_DATA_ELEMENTS; ++i)
+    ASSERT(loadTree(*gt));
+    for (int i = 0; i < NBR_TREE_DATA_ELEMENTS; ++i)
     {
-        ASSERT(bst_search(gt, tree_data[i]));
+        ASSERT(gt->search(treeData[i]));
     }
 
     ASSERT(teardown());
@@ -247,14 +239,14 @@ int test_bst_search ()
 
 int main (int argc, char * argv[])
 {
-    ASSERT(test_bst_create()==0);
-    ASSERT(test_bst_delete()==0);
-    ASSERT(test_bst_clear()==0);
-    ASSERT(test_bst_size()==0);
-    ASSERT(test_bst_is_empty()==0);
-    ASSERT(test_bst_insert()==0);
-    ASSERT(test_bst_remove()==0);
-    ASSERT(test_bst_search()==0);
+    ASSERT(testBstCreate()==0);
+    //ASSERT(test_bst_delete()==0);
+    ASSERT(testBstClear()==0);
+    ASSERT(testBstSize()==0);
+    ASSERT(testBstIsEmpty()==0);
+    ASSERT(testBstInsert()==0);
+    //ASSERT(test_bst_remove()==0);
+    ASSERT(testBstSearch()==0);
 
     return 0;
 }
