@@ -27,19 +27,17 @@ bool IntegrityChecker::execute (const Bst & t) const
     return true;
 }
 
-/*
-void bst_break_parent_integrity (struct bst * t, int num)
+void IntegrityChecker::breakParent (Bst * t, int num)
 {
     if (t == NULL)
         return;
 
     if (num == 0)
-        bst_break_parent_of_root_node(t);
+        breakParentOfRootNode(t);
     else
-        bst_break_parent_of_non_root_node(t, num);
+        breakParentOfNonRootNode(t, num);
 }
 
-*/
 // Private Methods:
 bool IntegrityChecker::checkEmptyTree (const Bst & t) const
 {
@@ -58,43 +56,41 @@ bool IntegrityChecker::checkEmptyTree (const Bst & t) const
     return true;
 }
 
-/*
-void bst_break_parent_of_root_node (struct bst * t)
+void IntegrityChecker::breakParentOfRootNode (Bst * t)
 {
-    struct bst_node * dummy = (struct bst_node *) 0x123;
-    bst_node_set_parent(t->root, dummy);
+    BstNode * const dummy = (BstNode *) 0x123;
+    t->_root->addParent(dummy);
 }
 
-void bst_break_parent_of_non_root_node (struct bst * t, int num)
+void IntegrityChecker::breakParentOfNonRootNode (Bst * t, int num)
 {
-    struct bst_node * n = bst_find_node_to_break(t, num);
+    BstNode * const n = findNodeToBreak(*t, num);
 
     if (n != NULL)
-        bst_node_set_parent(n, NULL);
+        n->addParent(NULL);
 }
 
-struct bst_node * bst_find_node_to_break (struct bst * t, int num)
+BstNode * IntegrityChecker::findNodeToBreak (const Bst & t, int num) const
 {
-    struct bst_node * result = NULL;
-    struct bst_node * n = t->root;
+    BstNode * result = NULL;
+    BstNode * n = t._root;
 
     while (n != NULL)
     {
-        if (num == bst_node_num(n))
+        if (num == n->num())
         {
             result = n;
             break;
         }
 
-        if (num < bst_node_num(n))
-            n = bst_node_left(n);
+        if (num < n->num())
+            n = n->left();
         else 
-            n = bst_node_right(n);
+            n = n->right();
     }
 
     return result;
 }
-*/
 
 bool IntegrityChecker::checkLessThan (const BstNode * s, int num) const
 {
