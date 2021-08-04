@@ -67,28 +67,6 @@ int testBstCreate ()
     return 0;
 }
 
-/*
-int test_bst_delete ()
-{
-    // tree null:
-    bst_delete(NULL); // just making sure it doesn't blow up
-
-    struct bst * t = NULL;
-    bst_delete(&t); // just making sure it doesn't blow up
-
-    // default: 
-    ASSERT(setup());
-
-    ASSERT(load_tree(gt));
-    bst_delete(&gt);
-    ASSERT(gt==NULL);
-
-    ASSERT(teardown());
-
-    return 0;
-}
-*/
-
 int testBstClear ()
 {
     ASSERT(setup());
@@ -171,57 +149,53 @@ int testBstInsert ()
     return 0;
 }
 
-/*
-int test_bst_remove ()
+int testBstRemove ()
 {
-    ASSERT(bst_remove(NULL, tree_data[0]) == BST_TREE_NULL);
-
     ASSERT(setup());
 
     // removing node in empty tree:
-    ASSERT(bst_is_empty(gt));
-    ASSERT(bst_remove(gt, tree_data[0]) == BST_TREE_EMPTY);
-    ASSERT(bst_check_integrity(gt));
-    ASSERT(bst_is_empty(gt));
+    ASSERT(gt->isEmpty());
+    ASSERT(gt->remove(treeData[0]) == Bst::TREE_EMPTY);
+    ASSERT(gc.execute(*gt));
+    ASSERT(gt->isEmpty());
 
     // removing node in tree with size 1:
-    bst_insert(gt, tree_data[0]);
-    ASSERT(bst_remove(gt, tree_data[0]) == BST_SUCCESS);
-    ASSERT(bst_is_empty(gt));
-    ASSERT(bst_check_integrity(gt));
+    ASSERT(gt->insert(treeData[0]) == Bst::SUCCESS);
+    ASSERT(gt->remove(treeData[0]) == Bst::SUCCESS);
+    ASSERT(gt->isEmpty());
+    ASSERT(gc.execute(*gt));
 
-    ASSERT(load_tree(gt));
+    ASSERT(loadTree(*gt));
 
     // removing root when size > 1:
-    int size = BST_NBR_TREE_DATA_ELEMENTS;
-    ASSERT(bst_remove(gt, tree_data[0]) == BST_SUCCESS);
-    ASSERT(bst_search(gt, tree_data[0]) == BST_NODE_NOT_FOUND);
-    ASSERT(bst_check_integrity(gt));
-    ASSERT(bst_size(gt)==size-1);
+    int size = NBR_TREE_DATA_ELEMENTS;
+    ASSERT(gt->remove(treeData[0]) == Bst::SUCCESS);
+    ASSERT(gt->search(treeData[0]) == Bst::NODE_NOT_FOUND);
+    ASSERT(gc.execute(*gt));
+    ASSERT(gt->size()==size-1);
     size--;
 
     // attempt to remove node not in tree
-    ASSERT(bst_remove(gt, BST_EXTRA_DATA_NUM) == BST_NODE_NOT_FOUND);
+    ASSERT(gt->remove(EXTRA_DATA_NUM) == Bst::NODE_NOT_FOUND);
 
     // general case:
-    ASSERT(bst_remove(gt, tree_data[8]) == BST_SUCCESS);
-    ASSERT(bst_search(gt, tree_data[8]) == BST_NODE_NOT_FOUND);
-    ASSERT(bst_check_integrity(gt));
-    ASSERT(bst_size(gt)==size-1);
+    ASSERT(gt->remove(treeData[8]) == Bst::SUCCESS);
+    ASSERT(gt->search(treeData[8]) == Bst::NODE_NOT_FOUND);
+    ASSERT(gc.execute(*gt));
+    ASSERT(gt->size()==size-1);
     size--;
 
     // remove leaf node:
-    ASSERT(bst_remove(gt, tree_data[14]) == BST_SUCCESS);
-    ASSERT(bst_search(gt, tree_data[14]) == BST_NODE_NOT_FOUND);
-    ASSERT(bst_check_integrity(gt));
-    ASSERT(bst_size(gt)==size-1);
+    ASSERT(gt->remove(treeData[14]) == Bst::SUCCESS);
+    ASSERT(gt->search(treeData[14]) == Bst::NODE_NOT_FOUND);
+    ASSERT(gc.execute(*gt));
+    ASSERT(gt->size()==size-1);
 
     ASSERT(teardown());
 
     return 0;
 }
 
-*/
 int testBstSearch ()
 {
     ASSERT(setup());
@@ -240,12 +214,11 @@ int testBstSearch ()
 int main (int argc, char * argv[])
 {
     ASSERT(testBstCreate()==0);
-    //ASSERT(test_bst_delete()==0);
     ASSERT(testBstClear()==0);
     ASSERT(testBstSize()==0);
     ASSERT(testBstIsEmpty()==0);
     ASSERT(testBstInsert()==0);
-    //ASSERT(test_bst_remove()==0);
+    ASSERT(testBstRemove()==0);
     ASSERT(testBstSearch()==0);
 
     return 0;

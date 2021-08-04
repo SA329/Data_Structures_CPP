@@ -98,7 +98,10 @@ bool IntegrityChecker::checkLessThan (const BstNode * s, int num) const
         return true;
 
     if (!isLessThan(*s, num))
+    {
+        cerr << "failed in checkLessThan(...)" << endl;
         return false;
+    }
 
     return 
         checkLessThan(s->left(), num) && checkLessThan(s->right(), num);
@@ -121,7 +124,10 @@ bool IntegrityChecker::checkGreaterThan (const BstNode * s, int num) const
         return true;
 
     if (!isGreaterThan(*s, num))
+    {
+        cerr << "failed in checkGreaterThan(...)" << endl;
         return false;
+    }
 
     return 
         checkGreaterThan(s->left(), num) && 
@@ -201,7 +207,7 @@ bool IntegrityChecker::checkOrderImpl (const BstNode * p) const
     {
         if (right == NULL)
             return true;
-        else 
+        else // left null; right !null
         {
             if (!isGreaterThan(*right, p_num))
                 return false;
@@ -210,9 +216,9 @@ bool IntegrityChecker::checkOrderImpl (const BstNode * p) const
     }
     else
     {
-        if (right == NULL)
-            return !isLessThan(*left, p_num);
-        else 
+        if (right == NULL) // left !null; right null
+            return isLessThan(*left, p_num);
+        else // both !null
         {
             if (!(isLessThan(*left, p_num) && isGreaterThan(*right, p_num)))
                 return false;
