@@ -1,5 +1,3 @@
-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
-
 TO DO:
     • delete oem account
     • create setup script and create github repository for scripts
@@ -14,8 +12,8 @@ TO DO:
     • running commands within vi
     
 8/04/2021
-(C++-bst) Finished porting the c implementation of the tests to c++. Next we have to implement breadth first search.
-A reminder: Do two-factor authentication for GitHub!!
+(C++-bst) Finished porting the c implementation of the tests to c++. We also got the algorithm for breadth first search sorted out in our notebook so we have to implement it next time.
+GitHub sorted out. Created a Personal Token for signing in starting August 13, 2021!!
     
 8/02/2021
 (C++-bst) Finished porting the c implementation of IntegrityChecker functions to c++. Moved on to testing. Next time we have to port the tests remove() and delete() to c++.
