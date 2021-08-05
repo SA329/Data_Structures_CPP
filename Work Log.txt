@@ -1,4 +1,6 @@
-﻿TO DO:
+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
+
+TO DO:
     • delete oem account
     • create setup script and create github repository for scripts
     • create a pretty printer for trees
@@ -11,9 +13,12 @@
     • test.h needs a repository.
     • running commands within vi
     
+8/04/2021
+(C++-bst) Finished porting the c implementation of the tests to c++. Next we have to implement breadth first search.
+A reminder: Do two-factor authentication for GitHub!!
+    
 8/02/2021
 (C++-bst) Finished porting the c implementation of IntegrityChecker functions to c++. Moved on to testing. Next time we have to port the tests remove() and delete() to c++.
-A reminder: Do two-factor authentication for GitHub!!
     
 7/29/2021
 (C++-bst) Sorted out the git pull error previously faced. Continued porting the c implementation of IntegrityChecker methods to c++. It is still a work in progress and we will continue next time.
