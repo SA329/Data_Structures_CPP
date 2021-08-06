@@ -3,13 +3,16 @@ TO DO:
     • create setup script and create github repository for scripts
     • create a pretty printer for trees
     • fix test generator to ignore prefix of return type
-    • Maybe: Create script to automatically generate forward declarations with 	input of hdr and src file!
+    • Maybe: Create script to automatically generate forward declarations with input of hdr and src file!
     • In sll, slls, queue, and stack, implement the more thorough check integrity 	implemented in dll.
     • give setup script a .rc file.
     • add helper function hdr file for sll
-    • modify slls to avoid problem of not hooking up head properly as faced in dll 	and sll.
+    • modify slls to avoid problem of not hooking up head properly as faced in dll and sll.
     • test.h needs a repository.
     • running commands within vi
+    
+8/05/2021
+(C++-bst) Finished implementing breadth first search. Used a vector. We are done porting the c implementation of Bst, BstNode, IntegrityChecker, and tests to c++. Next we will introduce a new node type to represent a null pointer.
     
 8/04/2021
 (C++-bst) Finished porting the c implementation of the tests to c++. We also got the algorithm for breadth first search sorted out in our notebook so we have to implement it next time.
