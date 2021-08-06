@@ -1,4 +1,6 @@
 #include <stdbool.h>
+#include <vector>
+using namespace std;
 
 class BstNode;
 
@@ -40,7 +42,8 @@ class Bst
 
     void clearImpl (BstNode *);
     void disconnectNodeFromParent (BstNode &);
-    void displayBfsImpl (const BstNode *) const;
+    void display (vector<BstNode *> &) const;
+    void displayBfsImpl (vector<BstNode *> &) const;
     void displayInorderImpl (const BstNode *) const;
     void displayPostorderImpl (const BstNode *) const;
     void displayPreorderImpl (const BstNode *) const;
@@ -49,6 +52,7 @@ class Bst
     ReturnCode insertNode (BstNode &);
     ReturnCode insertNode (BstNode *);
     bool isLeftChild (BstNode &) const;
+    void loadNextLevel (vector<BstNode *> &) const;
     void moveToNextNode (int, BstNode **) const;
     ReturnCode removeGeneralCase (BstNode &);
     ReturnCode removeNode (BstNode &);

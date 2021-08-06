@@ -2,7 +2,6 @@
 #include "../include/binary_search_tree.h"
 #include "../node/include/bst_node.h"
 #include <iostream>
-using namespace std;
 
 // Public Methods:
 IntegrityChecker::IntegrityChecker ()

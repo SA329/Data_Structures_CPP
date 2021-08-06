@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-using namespace std;
 
 #define CHECK_NULL(n, error_string, ret_value) \
     if (n == NULL) \
@@ -276,12 +275,48 @@ void Bst::displayPostorder () const
 void Bst::displayBfs () const
 {
     cout << "_size = " << _size << endl;
-    displayBfsImpl(_root);
+    vector<BstNode *> v;
+    v.push_back(_root);
+    displayBfsImpl(v);
 }
 
-void Bst::displayBfsImpl (const BstNode * n) const
+void Bst::displayBfsImpl (vector<BstNode *> & v) const
 {
-    // TODO
+    if (v.empty())
+        return;
+
+    display(v);
+
+    loadNextLevel(v);
+
+    displayBfsImpl(v);
+}
+
+void Bst::display (vector<BstNode *> & v) const
+{
+    for (vector<BstNode *>::iterator i = v.begin();
+         i != v.end();
+         ++i)
+    {
+        (*i)->display();
+    }
+}
+
+void Bst::loadNextLevel (vector<BstNode *> & dest) const
+{
+    vector<BstNode *> source;
+    dest.swap(source);
+
+    for (vector<BstNode *>::iterator i = source.begin();
+         i != source.end();
+         ++i)
+    {
+        if ((*i)->left() != NULL)
+            dest.push_back((*i)->left());
+
+        if ((*i)->right() != NULL)
+            dest.push_back((*i)->right());
+    }
 }
 
 void Bst::displayPreorderImpl (const BstNode * n) const
@@ -334,134 +369,3 @@ void Bst::displayInorderImpl (const BstNode * n) const
     if (n->right() != NULL)
         displayInorderImpl(n->right());
 }
-
-/*
-struct bst_node * bst_search_impl (struct bst_node * n, int num)
-{
-    if (n == NULL)
-        return n; 
-
-    if (num < bst_node_num(n))
-        return bst_search_impl(bst_node_left(n), num);
-    else if (num > bst_node_num(n))
-        return bst_search_impl(bst_node_right(n), num);
-    else // equal
-        return n;
-}
-
-Bst_Return_Code bst_search (struct bst * t, int num)
-{
-    if (t == NULL)
-        return TREE_NULL;
-
-    if (bst_search_impl(t->root, num) != NULL)
-        return NODE_FOUND;
-
-    return NODE_NOT_FOUND;
-}
-
-struct bst_node * bst_find_node_to_remove (
-    struct bst * t, // t is NOT empty
-    int num)
-{
-   struct bst_node * n = t->root;
-   for (; n != NULL; bst_move_to_next_node(num, &n))
-   {
-        if (num == bst_node_num(n))
-            break;
-   }
-
-   return n;
-}
-
-bool bst_is_left_child (struct bst_node * n)
-{
-    struct bst_node * left_child_of_n = bst_node_left(bst_node_parent(n));
-    if (left_child_of_n == NULL)
-        return false;
-
-    return bst_node_num(left_child_of_n) == bst_node_num(n);
-}
-
-Bst_Return_Code bst_reinsert_subtrees_of_node (
-    struct bst * t, struct bst_node * n)
-{
-    Bst_Return_Code result = SUCCESS;
-    if (bst_node_left(n) != NULL)
-        result = bst_insert_node(t, bst_node_left(n));
-
-    if (result == SUCCESS && bst_node_right(n) != NULL) 
-        result = bst_insert_node(t, bst_node_right(n));
-
-    return result;
-}
-
-void bst_disconnect_node_from_parent (struct bst_node * n)
-{
-    if (bst_is_left_child(n))
-        bst_node_set_left(bst_node_parent(n), NULL);
-    else
-        bst_node_set_right(bst_node_parent(n), NULL);
-}
-
-Bst_Return_Code bst_remove_general_case (
-    struct bst * t, 
-    struct bst_node * n)
-{
-    bst_disconnect_node_from_parent(n);
-    return bst_reinsert_subtrees_of_node(t, n);
-}
-
-bool bst_is_root (struct bst_node * n)
-{
-    return bst_node_parent(n) == NULL;
-}
-
-void bst_set_new_root (struct bst * t, struct bst_node * n)
-{
-    t->root = n;
-    if (t->root != NULL)
-        bst_node_set_parent(t->root, NULL);
-}
-
-void bst_root_tree_to_right_subtree (
-    struct bst * t, struct bst_node * n)
-{
-    bst_set_new_root(t, bst_node_right(n));
-}
-
-Bst_Return_Code bst_root_tree_to_left_subtree (
-    struct bst * t, struct bst_node * n)
-{
-    bst_set_new_root(t, bst_node_left(n));
-
-    if (bst_node_right(n) != NULL)
-    {
-        bst_node_set_parent(bst_node_right(n), NULL);
-        return bst_insert_node(t, bst_node_right(n));
-    }
-
-    return SUCCESS;
-}
-
-Bst_Return_Code bst_remove_root (struct bst * t, struct bst_node * n)
-{
-    if (bst_node_left(n) != NULL)
-        return bst_root_tree_to_left_subtree(t, n);
-    else
-        bst_root_tree_to_right_subtree(t, n);
-
-    return SUCCESS;
-}
-
-Bst_Return_Code bst_remove_node (struct bst * t, struct bst_node * n)
-{
-    if (bst_is_root(n))
-        return bst_remove_root(t, n);
-    else
-        return bst_remove_general_case(t, n);
-}
-
-#include "bst_display_functions.c"
-#include "bst_check_integrity_functions.c"
-*/

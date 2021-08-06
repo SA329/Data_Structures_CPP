@@ -83,6 +83,7 @@ int testBstClear ()
     ASSERT(gc.execute(*gt));
 
     ASSERT(loadTree(*gt));
+    gt->displayBfs();
 
     // default
     gt->clear();
