@@ -11,6 +11,9 @@ TO DO:
     • test.h needs a repository.
     • running commands within vi
     
+8/09/2021
+(C++-bst) We introduced BstNodeBase to serve as a singleton instance of a "terminal node". This failed to work because we could not get the correct operator == () invoked.We considered using  pure virtual methods in BstNodeBase, but that prevented us from creating an instance of a BstNodeBase, so we will have to rethink this.
+    
 8/05/2021
 (C++-bst) Finished implementing breadth first search. Used a vector. We are done porting the c implementation of Bst, BstNode, IntegrityChecker, and tests to c++. Next we will introduce a new node type to represent a null pointer.
     
