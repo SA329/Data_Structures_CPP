@@ -1,4 +1,4 @@
-TO DO:
+﻿TO DO:
     • delete oem account
     • create setup script and create github repository for scripts
     • create a pretty printer for trees
@@ -10,6 +10,9 @@ TO DO:
     • modify slls to avoid problem of not hooking up head properly as faced in dll and sll.
     • test.h needs a repository.
     • running commands within vi
+    
+8/12/2021
+(C++-bst) We stopped using BstNodeBase and introduced an interface that both BstNode and a new class BstTerminalNode support. This allowed us to avoid using inheritance. BstNode will now use BstTerminalNode as needed. We still need to determine if operator == is needed.
     
 8/09/2021
 (C++-bst) We introduced BstNodeBase to serve as a singleton instance of a "terminal node". This failed to work because we could not get the correct operator == () invoked.We considered using  pure virtual methods in BstNodeBase, but that prevented us from creating an instance of a BstNodeBase, so we will have to rethink this.
