@@ -8,13 +8,13 @@ TDIR=tst
 
 OUTPUTFILE=libbstcc_node.a
 
-_DEPS=bst_node.h
+_DEPS=bst_node.h bst_terminal_node.h bst_node_if.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ=bst_node.o
+_OBJ=bst_node.o bst_terminal_node.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-_SRC=bst_node.cc
+_SRC=bst_node.cc bst_terminal_node.cc
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 _TEST=test_node.cc
