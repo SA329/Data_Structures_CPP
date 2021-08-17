@@ -18,3 +18,5 @@ class BstNodeIf
     virtual void addRight (BstNodeIf &) = 0;
     virtual void addParent (BstNodeIf &) = 0;
 };
+
+bool operator == (const BstNodeIf &, const BstNodeIf &);

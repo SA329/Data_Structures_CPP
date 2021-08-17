@@ -24,17 +24,10 @@ BstNode::~BstNode ()
     clear();
 }
 
-/*
 bool BstNode::operator == (const BstNode & n) const
 {
-    cout << "inside BstNode::operator == (...)" << endl;
-    return 
-        _num == n.num() && 
-        _left == n.left() && 
-        _right == n.right() && 
-        _parent == n.parent();
+    return _num == n.num() && ::operator ==(*this, n);
 }
-*/
 
 void BstNode::clear ()
 {

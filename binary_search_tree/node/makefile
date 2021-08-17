@@ -11,10 +11,10 @@ OUTPUTFILE=libbstcc_node.a
 _DEPS=bst_node.h bst_terminal_node.h bst_node_if.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ=bst_node.o bst_terminal_node.o
+_OBJ=bst_node.o bst_terminal_node.o bst_node_if.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-_SRC=bst_node.cc bst_terminal_node.cc
+_SRC=bst_node.cc bst_terminal_node.cc bst_node_if.cc
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 _TEST=test_node.cc

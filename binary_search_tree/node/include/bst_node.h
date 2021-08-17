@@ -10,7 +10,7 @@ class BstNode : public BstNodeIf
     BstNode (int);
     virtual ~BstNode ();
 
-    //bool operator == (const BstNode &) const;
+    bool operator == (const BstNode &) const;
 
     // BstNodeIf Implementation:
     void clear ();

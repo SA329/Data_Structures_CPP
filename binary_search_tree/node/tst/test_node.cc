@@ -1,23 +1,19 @@
 #include "../../../../tst/test.h"
 #include "../include/bst_node.h"
 
-#define DUMMY_POINTER_LEFT 0x12345
-#define DUMMY_POINTER_RIGHT 0x67891
-#define DUMMY_POINTER_PARENT 0x01357
-
 int test_BstNode ()
 {
     BstNode n;
     ASSERT(n.num()==0);
-    ASSERT(n.left()==NULL);
-    ASSERT(n.right()==NULL);
-    ASSERT(n.parent()==NULL);
+    ASSERT(n.left().isTerminalNode());
+    ASSERT(n.right().isTerminalNode());
+    ASSERT(n.parent().isTerminalNode());
 
     BstNode n2(100);
     ASSERT(n2.num()==100);
-    ASSERT(n2.left()==NULL);
-    ASSERT(n2.right()==NULL);
-    ASSERT(n2.parent()==NULL);
+    ASSERT(n2.left().isTerminalNode());
+    ASSERT(n2.right().isTerminalNode());
+    ASSERT(n2.parent().isTerminalNode());
 
     return 0;
 }
@@ -28,9 +24,9 @@ int test_clear ()
 
     n.clear();
     ASSERT(n.num()==0);
-    ASSERT(n.left()==NULL);
-    ASSERT(n.right()==NULL);
-    ASSERT(n.parent()==NULL);
+    ASSERT(n.left().isTerminalNode());
+    ASSERT(n.right().isTerminalNode());
+    ASSERT(n.parent().isTerminalNode());
 
     return 0;
 }
@@ -38,8 +34,9 @@ int test_clear ()
 int test_addLeft ()
 {
     BstNode n;
-    BstNode * dummy = (BstNode *) DUMMY_POINTER_LEFT;
+    BstNode dummy;
     n.addLeft(dummy);
+    ASSERT(!n.left().isTerminalNode());
     ASSERT(n.left()==dummy);
 
     return 0;
@@ -48,7 +45,7 @@ int test_addLeft ()
 int test_addRight ()
 {
     BstNode n;
-    BstNode * dummy = (BstNode *) DUMMY_POINTER_RIGHT;
+    BstNode dummy;
     n.addRight(dummy);
     ASSERT(n.right()==dummy);
 
@@ -58,7 +55,7 @@ int test_addRight ()
 int test_addParent ()
 {
     BstNode n;
-    BstNode * dummy = (BstNode *) DUMMY_POINTER_PARENT;
+    BstNode dummy;
     n.addParent(dummy);
     ASSERT(n.parent()==dummy);
 
