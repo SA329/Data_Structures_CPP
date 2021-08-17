@@ -11,6 +11,9 @@
     • test.h needs a repository.
     • running commands within vi
     
+8/16/2021
+(C++-bst) We decided we needed operator == for our tests, so we implemented it in BstNodeIf as a free functions, not a member function. We also implemented it in BstNode. When we were testing addLeft the assignment didn’t work as expected. Before the function, _left was a TerminalNode, and after assigning it to a non-TerminalNode, it stayed a TerminalNode. We will have to explore why this happened.
+    
 8/12/2021
 (C++-bst) We stopped using BstNodeBase and introduced an interface that both BstNode and a new class BstTerminalNode support. This allowed us to avoid using inheritance. BstNode will now use BstTerminalNode as needed. We still need to determine if operator == is needed.
     
