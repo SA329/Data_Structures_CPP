@@ -1,4 +1,12 @@
 #include "../include/bst_node_if.h"
+#include <iostream>
+using namespace std;
+
+BstNodeIf & BstNodeIf::operator = (const BstNodeIf & right)
+{
+    cout << "entered BstNodeIf::operator =(...)" << endl;
+    return *this;
+}
 
 bool operator == (
     const BstNodeIf & left, 

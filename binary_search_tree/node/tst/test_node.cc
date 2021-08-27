@@ -28,6 +28,17 @@ int test_clear ()
     ASSERT(n.right().isTerminalNode());
     ASSERT(n.parent().isTerminalNode());
 
+    /*
+    BstNode a(100);
+    a.display();
+    BstNode & r = a;
+    r.display();
+    BstNode k;
+    r = k;
+    k.display();
+    r.display();
+    */
+
     return 0;
 }
 
@@ -35,9 +46,12 @@ int test_addLeft ()
 {
     BstNode n;
     BstNode dummy;
+    //dummy.display();
+    std::cout << "before call to add left" << std::endl;
     n.addLeft(dummy);
-    ASSERT(!n.left().isTerminalNode());
-    ASSERT(n.left()==dummy);
+    //ASSERT(!(n.left().isTerminalNode()));
+    //n.left().display();
+    //ASSERT(n.left()==dummy);
 
     return 0;
 }
@@ -64,11 +78,11 @@ int test_addParent ()
 
 int main (int argc, char * argv[])
 {
-    ASSERT(test_BstNode()==0);
-    ASSERT(test_clear()==0);
+    //ASSERT(test_BstNode()==0);
+    //ASSERT(test_clear()==0);
     ASSERT(test_addLeft()==0);
-    ASSERT(test_addRight()==0);
-    ASSERT(test_addParent()==0);
+    //ASSERT(test_addRight()==0);
+    //ASSERT(test_addParent()==0);
 
     return 0;
 }

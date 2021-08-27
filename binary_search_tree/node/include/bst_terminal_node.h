@@ -7,6 +7,7 @@ class BstTerminalNode : public BstNodeIf
 {
     public:
     static BstTerminalNode & instance ();
+    BstTerminalNode & operator = (const BstNodeIf &);
 
     // BstNodeIf Implementation:
     void clear ();

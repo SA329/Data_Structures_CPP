@@ -29,6 +29,20 @@ bool BstNode::operator == (const BstNode & n) const
     return _num == n.num() && ::operator ==(*this, n);
 }
 
+BstNode & BstNode::operator = (const BstNode & right)
+{
+    cout << "entered assignment operator '='" << endl;
+    if (*this == right)
+        return *this;
+    
+    _num = right._num;
+    _left = right._left;
+    _right = right._right;
+    _parent = right._parent;
+
+    return *this;
+}
+
 void BstNode::clear ()
 {
     _num = 0;
@@ -40,13 +54,13 @@ void BstNode::clear ()
 void BstNode::display () const
 {
     cout << "this = " << this
-         << ", _num = " << _num 
-         /*
-         << ", _left = " << _left
-         << ", _right = " << _right
-         << ", _parent = " << _parent
-         */
-         << "." << endl;
+        << ", _num = " << _num 
+        /*
+        << ", _left = " << _left
+        << ", _right = " << _right
+        << ", _parent = " << _parent
+        */
+        << "." << endl;
 }
 
 int BstNode::num () const

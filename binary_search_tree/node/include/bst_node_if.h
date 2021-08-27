@@ -4,6 +4,7 @@ class BstNodeIf
 {
     public:
     virtual bool isTerminalNode () const = 0;
+    virtual BstNodeIf & operator = (const BstNodeIf &);
 
     virtual void clear () = 0;
     virtual void display () const = 0;

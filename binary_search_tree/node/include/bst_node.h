@@ -11,6 +11,7 @@ class BstNode : public BstNodeIf
     virtual ~BstNode ();
 
     bool operator == (const BstNode &) const;
+    BstNode & operator = (const BstNode &);
 
     // BstNodeIf Implementation:
     void clear ();
