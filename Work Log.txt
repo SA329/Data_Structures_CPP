@@ -10,9 +10,12 @@
     • modify slls to avoid problem of not hooking up head properly as faced in dll and sll.
     • test.h needs a repository.
     • running commands within vi
+       
+8/26/2021
+(C++-bst) The left/right/parent of a node is a reference initialized to a terminal node,  We found that any attempt to subsequently change the reference to a non-terminal node is unsuccessful. That is, the left/right/parent remains a terminal node. We're not sure why this is happening. It is as though you cannot reassign a reference. We need to explore this further. Perhaps we aren't understanding reference assignment, and should try experimenting with primitive types to make sure it behave the way we think it should.
 
 8/18/2021
-(C++-bst) We defined assignment operators in BstNode, BstTerminalNode, and BstNodeIf to understand why addLeft() wasn’t working. We found out that _left was a  BstTerminalNode so it wasn’t calling the right operator =. Once we created the proper operator = it was calling it more times than we expected. We need to figure out why next time.
+(C++-bst) We defined assignment operators in BstNode, BstTerminalNode, and BstNodeIf to understand why addLeft() wasn’t working. We found out that _left was a BstTerminalNode so it wasn’t calling the right operator =. Once we created the proper operator = it was calling it more times than we expected. We need to figure out why next time.
     
 8/16/2021
 (C++-bst) We decided we needed operator == for our tests, so we implemented it in BstNodeIf as a free functions, not a member function. We also implemented it in BstNode. When we were testing addLeft the assignment didn’t work as expected. Before the function, _left was a TerminalNode, and after assigning it to a non-TerminalNode, it stayed a TerminalNode. We will have to explore why this happened.
