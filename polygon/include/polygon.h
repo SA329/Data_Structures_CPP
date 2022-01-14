@@ -1,3 +1,5 @@
+#ifndef CPP_POLYGON_H
+#define CPP_POLYGON_H
 #include <vector>
 #include <utility>
 using namespace std;
@@ -16,31 +18,7 @@ class Polygon : public PolygonIf
     virtual ~Polygon ();
 
     protected:
-    vector<pair<int,int> > _lines;
+    vector<pair<float,float> > _coords;
 };
 
-class Triangle : public Polygon
-{
-    public:
-    Triangle ();
-    ~Triangle ();
-
-    void display () const;
-    float area () const;
-    float perimeter () const;
-
-    private:
-};
-
-class Rectangle : public Polygon
-{
-    public:
-    Rectangle ();
-    ~Rectangle ();
-
-    void display () const;
-    float area () const;
-    float perimeter () const;
-
-    private:
-};
+#endif

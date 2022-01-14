@@ -4,7 +4,8 @@ class Triangle : public Polygon
 {
     public:
     Triangle (int); // equilateral
-    //Triangle (int, int, ); TODO: find difference between isoceles and right triangle.
+    Triangle (int, int); // right
+    Triangle (int, int, double); // general case
     ~Triangle ();
 
     pair<float,float> find_third_coordinate (
@@ -15,4 +16,5 @@ class Triangle : public Polygon
     float perimeter () const;
 
     private:
+    void initialize (int, int, double);
 };
