@@ -6,16 +6,16 @@ IDIR=include
 SDIR=src
 TDIR=tst
 
-_DEPS=polygon.h integrity_checker.h rectangle.h triangle.h
+_DEPS=polygonif.h integrity_checker.h rectangle.h triangle.h square.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _DEPSC=integrity_checker.cc
 DEPSC = $(patsubst %,$(SDIR)/%,$(_DEPSC))
 
-_OBJ=polygon.o integrity_checker.o triangle.o rectangle.o
+_OBJ=integrity_checker.o triangle.o rectangle.o square.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-_SRC=polygon.cc integrity_checker.cc rectangle.cc triangle.cc
+_SRC=integrity_checker.cc rectangle.cc triangle.cc square.cc
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 _TEST=test.cc

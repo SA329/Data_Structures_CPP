@@ -5,21 +5,25 @@
 
 Triangle::Triangle (int l)
 {
+    cout << "Inside Triangle::Triangle (int)" << endl;
     initialize(l, l, EQUILATERAL_ANGLE);
 }
 
 Triangle::Triangle (int a, int b)
 {
+    cout << "Inside Triangle::Triangle (int, int)" << endl;
     initialize(a, b, RIGHT_ANGLE);
 }
 
 Triangle::Triangle (int a, int b, double angle)
 {
+    cout << "Inside Triangle::Triangle (int, int, double)" << endl;
     initialize(a, b, angle);
 }
 
 Triangle::~Triangle ()
 {
+    cout << "Inside Triangle::~Triangle ()" << endl;
 }
 
 void Triangle::initialize (int a, int b, double angle)
@@ -47,16 +51,17 @@ pair<float,float> Triangle::find_third_coordinate (
 
 void Triangle::display () const
 {
+    cout << "Inside Triangle::display() const;" << endl;
 }
 
 float Triangle::area () const
 {
-    cout << "Calling Triangle::area() const;" << endl;
+    cout << "Inside Triangle::area() const;" << endl;
     return 0;
 }
 
 float Triangle::perimeter () const
 {
-    cout << "Calling Triangle:perimeter() const;" << endl;
+    cout << "Inside Triangle:perimeter() const;" << endl;
     return 0;
 }

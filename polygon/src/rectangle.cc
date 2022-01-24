@@ -1,6 +1,20 @@
 #include "../include/rectangle.h"
+#include <iostream>
+#include <ostream>
 
 Rectangle::Rectangle ()
+{
+    cout << "Inside Rectangle::Rectangle ()" << endl;
+    initialize(3, 6);
+}
+
+Rectangle::Rectangle (float l, float w)
+{
+    cout << "Inside Rectangle::Rectangle (float, float)" << endl;
+    initialize(l, w);
+}
+
+void Rectangle::initialize (float l, float w)
 {
     /*
     pair<int,int> p1(0,0);
@@ -17,18 +31,22 @@ Rectangle::Rectangle ()
 
 Rectangle::~Rectangle ()
 {
+    cout << "Inside Rectangle::~Rectangle ()" << endl;
 }
 
 void Rectangle::display () const
 {
+    cout << "Inside Rectangle::display() const" << endl;
 }
 
 float Rectangle::area () const
 {
+    cout << "Inside Rectangle::area() const" << endl;
     return 0;
 }
 
 float Rectangle::perimeter () const
 {
+    cout << "Inside Rectangle::perimeter() const" << endl;
     return 0;
 }

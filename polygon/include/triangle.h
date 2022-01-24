@@ -1,12 +1,15 @@
-#include "polygon.h"
+#include "polygonif.h"
+#include <vector>
+#include <utility>
+using namespace std;
 
-class Triangle : public Polygon
+class Triangle : public PolygonIf
 {
     public:
     Triangle (int); // equilateral
     Triangle (int, int); // right
     Triangle (int, int, double); // general case
-    ~Triangle ();
+    virtual ~Triangle ();
 
     pair<float,float> find_third_coordinate (
         const pair<float,float> &,
@@ -17,4 +20,5 @@ class Triangle : public Polygon
 
     private:
     void initialize (int, int, double);
+    vector<pair<float,float> > _coords;
 };
